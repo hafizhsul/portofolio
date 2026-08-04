@@ -807,16 +807,16 @@ footer{padding-block:var(--space-xl) var(--space-lg);border-top:1px solid var(--
 }
 
 /* Syntax Highlighting */
-.json-bracket { color: #94e2d5; }
-.json-colon { color: #89dceb; }
-.json-key { color: #89b4fa; font-weight: 500; }
+.json-bracket { color: var(--term-bracket); }
+.json-colon { color: var(--term-colon); }
+.json-key { color: var(--term-key); font-weight: 500; }
 .json-string { 
-  color: #a6e3a1; 
+  color: var(--term-string); 
   transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out);
 }
 .json-string:hover { 
-  color: #b9f27c; 
-  text-shadow: 0 0 10px rgba(166, 227, 161, 0.4); 
+  color: var(--term-green); 
+  text-shadow: 0 0 10px color-mix(in oklch, var(--term-green) 40%, transparent); 
   cursor: crosshair;
 }
 
@@ -829,8 +829,8 @@ footer{padding-block:var(--space-xl) var(--space-lg);border-top:1px solid var(--
 @media (max-width: 700px) { .term-grid { grid-template-columns: 1fr; } }
 
 .term-card {
-  background: #11111b; /* Dark terminal background */
-  border: 1px solid #313244;
+  background: var(--term-bg);
+  border: 1px solid var(--term-border);
   border-radius: var(--radius-md);
   overflow: hidden;
   display: flex;
@@ -840,16 +840,16 @@ footer{padding-block:var(--space-xl) var(--space-lg);border-top:1px solid var(--
 .term-card:hover {
   transform: translateY(-6px);
   box-shadow: 0 4px 16px -8px color-mix(in oklch, var(--color-ink) 18%, transparent);
-  border-color: #89b4fa; /* Accent highlight on hover */
+  border-color: var(--term-accent);
 }
 
 .term-card-header {
-  background: #181825;
+  background: var(--term-header-bg);
   padding: 0.6rem 1.25rem;
-  border-bottom: 1px solid #313244;
+  border-bottom: 1px solid var(--term-border);
   font-family: var(--font-mono);
   font-size: var(--text-xs);
-  color: #bac2de;
+  color: var(--term-text-soft);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -859,9 +859,9 @@ footer{padding-block:var(--space-xl) var(--space-lg);border-top:1px solid var(--
   position: relative;
   border-radius: 0;
   margin-bottom: 0;
-  border-bottom: 1px solid #313244;
+  border-bottom: 1px solid var(--term-border);
   aspect-ratio: 16/10;
-  background: #1e1e2e;
+  background: var(--term-bg-2);
 }
 /* Efek garis pindai (Scanline) CRT ala monitor lawas */
 .term-card .scanlines {
@@ -879,16 +879,16 @@ footer{padding-block:var(--space-xl) var(--space-lg);border-top:1px solid var(--
   flex-grow: 1;
   display: flex;
   flex-direction: column;
-  background: #11111b;
+  background: var(--term-bg);
 }
 
 .term-tag {
   display: inline-block;
   font-family: var(--font-mono);
   font-size: 0.75rem;
-  color: #89b4fa;
-  background: rgba(137, 180, 250, 0.1);
-  border: 1px solid rgba(137, 180, 250, 0.2);
+  color: var(--term-accent);
+  background: color-mix(in oklch, var(--term-accent) 10%, transparent);
+  border: 1px solid color-mix(in oklch, var(--term-accent) 20%, transparent);
   padding: 0.25rem 0.6rem;
   border-radius: 6px;
   margin-right: 0.4rem;
@@ -897,12 +897,12 @@ footer{padding-block:var(--space-xl) var(--space-lg);border-top:1px solid var(--
 
 .term-card-body h3 {
   font-size: var(--text-lg);
-  color: #cdd6f4;
+  color: var(--term-text);
   margin-bottom: 0.5rem;
 }
 
 .term-card-body p {
-  color: #a6adc8;
+  color: var(--term-text-soft);
   font-size: var(--text-sm);
   margin-bottom: 1.25rem;
   flex-grow: 1;
@@ -913,22 +913,22 @@ footer{padding-block:var(--space-xl) var(--space-lg);border-top:1px solid var(--
   align-self: flex-start;
   font-family: var(--font-mono);
   font-size: var(--text-xs);
-  color: #a6e3a1;
+  color: var(--term-green);
   text-decoration: none;
-  border-bottom: 1px dashed #a6e3a1;
+  border-bottom: 1px dashed var(--term-green);
   padding-bottom: 2px;
   transition: color var(--dur-fast), border-style var(--dur-fast);
 }
 .term-link:hover {
-  color: #b9f27c;
+  color: color-mix(in oklch, var(--term-green) 80%, white);
   border-style: solid;
 }
 
 /* Call to Action - Prompt Bash Shell */
 .term-cta {
   grid-column: 1 / -1;
-  background: #11111b;
-  border: 1px dashed #313244;
+  background: var(--term-bg);
+  border: 1px dashed var(--term-border);
   border-radius: var(--radius-md);
   padding: 1.75rem;
   display: flex;
@@ -940,18 +940,18 @@ footer{padding-block:var(--space-xl) var(--space-lg);border-top:1px solid var(--
   transition: border-color var(--dur-base), background var(--dur-base);
 }
 .term-cta:hover {
-  border-color: #89b4fa;
-  background: #181825;
+  border-color: var(--term-accent);
+  background: var(--term-header-bg);
 }
-.term-cta .prompt-user { color: #a6e3a1; font-weight: 600; }
-.term-cta .prompt-colon { color: #cdd6f4; }
-.term-cta .prompt-dir { color: #89b4fa; font-weight: 600; }
-.term-cta .prompt-char { color: #cdd6f4; }
-.term-cta .cmd-text { color: #f9e2af; font-size: 1.1em; }
+.term-cta .prompt-user { color: var(--term-green); font-weight: 600; }
+.term-cta .prompt-colon { color: var(--term-text); }
+.term-cta .prompt-dir { color: var(--term-accent); font-weight: 600; }
+.term-cta .prompt-char { color: var(--term-text); }
+.term-cta .cmd-text { color: var(--term-yellow); font-size: 1.1em; }
 
 .term-btn-outline {
-  border: 1px solid #89b4fa;
-  color: #89b4fa;
+  border: 1px solid var(--term-accent);
+  color: var(--term-accent);
   padding: 0.7rem 1.4rem;
   border-radius: 6px;
   font-size: var(--text-sm);
@@ -959,29 +959,29 @@ footer{padding-block:var(--space-xl) var(--space-lg);border-top:1px solid var(--
   cursor: pointer;
 }
 .term-btn-outline:hover {
-  background: #89b4fa;
-  color: #11111b;
+  background: var(--term-accent);
+  color: var(--term-bg);
   transform: translateY(-2px);
 }
 
 /* ---------- Experience: TUI Dashboard (Clean Readability) ---------- */
 .tui-panel {
-  background: #11111b;
+  background: var(--term-bg);
   border-radius: var(--radius-lg);
-  border: 1px solid #313244;
+  border: 1px solid var(--term-border);
   overflow: hidden;
   margin-top: var(--space-md);
   box-shadow: 0 4px 16px -8px color-mix(in oklch, var(--color-ink) 18%, transparent);
 }
 .tui-header {
-  background: #181825;
+  background: var(--term-header-bg);
   padding: 0.85rem 1.25rem;
-  border-bottom: 1px solid #313244;
+  border-bottom: 1px solid var(--term-border);
   display: flex;
   justify-content: space-between;
   font-family: var(--font-mono);
   font-size: var(--text-xs);
-  color: #bac2de;
+  color: var(--term-text-soft);
 }
 .tui-body {
   padding: 2.5rem;
@@ -991,7 +991,7 @@ footer{padding-block:var(--space-xl) var(--space-lg);border-top:1px solid var(--
 }
 
 .job-entry {
-  border-left: 2px solid #313244;
+  border-left: 2px solid var(--term-border);
   padding-left: 1.75rem;
   margin-bottom: 2.5rem;
   position: relative;
@@ -1007,16 +1007,16 @@ footer{padding-block:var(--space-xl) var(--space-lg);border-top:1px solid var(--
 .job-entry::before {
   content: '';
   position: absolute;
-  left: -7px; /* Menempatkan titik persis di tengah garis 2px */
+  left: -7px;
   top: 0.25rem;
   width: 12px; height: 12px;
   border-radius: 50%;
-  background: #89b4fa;
-  border: 2px solid #11111b; /* Memberi jarak pandang dengan garis vertikal */
+  background: var(--term-accent);
+  border: 2px solid var(--term-bg);
 }
 /* Warna titik untuk pekerjaan terbaru (paling atas) */
 .job-entry:nth-child(1)::before { 
-  background: #a6e3a1; 
+  background: var(--term-green); 
   box-shadow: 0 0 8px rgba(166, 227, 161, 0.4); 
 }
 
@@ -1026,21 +1026,21 @@ footer{padding-block:var(--space-xl) var(--space-lg);border-top:1px solid var(--
 .job-date {
   font-family: var(--font-mono);
   font-size: var(--text-xs);
-  color: #a6adc8;
+  color: var(--term-text-soft);
   display: inline-block;
   margin-bottom: 0.6rem;
-  background: rgba(166, 173, 200, 0.1);
+  background: color-mix(in oklch, var(--term-text-soft) 10%, transparent);
   padding: 0.25rem 0.75rem;
   border-radius: 4px;
 }
 .job-title {
   font-size: var(--text-lg);
-  color: #cdd6f4;
+  color: var(--term-text);
   margin: 0 0 0.2rem 0;
 }
 .job-company {
   font-size: var(--text-sm);
-  color: #89b4fa;
+  color: var(--term-accent);
   font-family: var(--font-mono);
 }
 
@@ -1054,7 +1054,7 @@ footer{padding-block:var(--space-xl) var(--space-lg);border-top:1px solid var(--
 }
 .job-tasks li {
   font-size: var(--text-sm);
-  color: #bac2de;
+  color: var(--term-text-soft);
   line-height: 1.6;
   position: relative;
   padding-left: 1.25rem;
@@ -1066,12 +1066,12 @@ footer{padding-block:var(--space-xl) var(--space-lg);border-top:1px solid var(--
   left: 0;
   top: 0.1rem;
   font-family: var(--font-mono);
-  color: #313244;
+  color: var(--term-border);
   font-weight: 600;
   transition: color var(--dur-base) var(--ease-out);
 }
 .job-entry:hover .job-tasks li::before {
-  color: #f38ba8; /* Berubah warna muda saat di-hover */
+  color: color-mix(in oklch, var(--term-accent) 80%, red);
 }
 
 </style>
