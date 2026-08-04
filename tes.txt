@@ -1,19 +1,5 @@
-1. - INKA - e-Procurement
-   - website to perform the online procurement, and handled 50+ vendor accounts including resolving user access issues
-   - Laravel and symfony
-   - 
-
-2. - MonitorRad
-   - website monitoring radiation of Hazardous and Toxic Waste and create early warning system via telegram bot
-   - Laravel
-   - https://github.com/hafizhsul/MonitorRad
-
-3. - StuntZilla
-   - a mobile application for detecting stunting symptoms
-   - Kotlin
-   - 
-
-4. - IntervalFit
-   - IntervalFit was created to solve that problem: an interval timer that’s quick to set up, easy to read while exercising, and features an automatic voice countdown so users don’t have to keep looking at the screen
-   - Flutter
-   - 
+1. P1 /impeccable harden: Fix h1 typewriter untuk SR (aria-label/hidden fallback) + skip typewriter saat reduced-motion + persist theme.
+2. P1 /impeccable adapt: Tambah mobile nav (hamburger) + perbesar touch targets ≥ 44px.
+3. P2 /impeccable optimize: Turunkan backdrop-blur, hapus will-change at rest.
+4. P2 /impeccable polish: Token untuk warna hard-coded, set lang awal benar.
+5. Akhiri /impeccable polish setelah perbaikan.

@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Hafizh Sulthan Bachtiyar — IT Support & Software Developer</title>
+<link rel="icon" type="image/x-icon" href="src/favicon.svg">
 <meta name="description" content="Portofolio Hafizh Sulthan Bachtiyar — IT Support/Helpdesk profesional yang juga membangun software.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -57,6 +58,23 @@
   --dur-base: 400ms;
 
   --max-w: 74rem;
+  --term-bg: oklch(96% 0.003 250);
+  --term-bg-2: oklch(98% 0.002 250);
+  --term-border: var(--color-line);
+  --term-header-bg: oklch(93% 0.004 250);
+  --term-text: var(--color-ink);
+  --term-text-soft: var(--color-ink-soft);
+  --term-accent: var(--color-accent);
+  --term-green: oklch(55% 0.14 150);
+  --term-yellow: oklch(70% 0.14 85);
+  --term-bracket: oklch(55% 0.12 180);
+  --term-colon: oklch(55% 0.1 200);
+  --term-key: var(--color-accent);
+  --term-string: oklch(55% 0.14 150);
+  --term-btn-close: oklch(65% 0.2 20);
+  --term-btn-min: oklch(75% 0.18 85);
+  --term-btn-max: oklch(65% 0.14 140);
+  --term-highlight: var(--color-accent);
 
   color-scheme: light;
 }
@@ -71,6 +89,23 @@ html[data-theme="dark"]{
   --color-accent-ink: oklch(15% 0.01 255);
   --color-accent-soft: oklch(30% 0.05 258);
   --color-good: oklch(72% 0.15 150);
+  --term-bg: #11111b;
+  --term-bg-2: #1e1e2e;
+  --term-border: #313244;
+  --term-header-bg: #181825;
+  --term-text: #cdd6f4;
+  --term-text-soft: #a6adc8;
+  --term-accent: #89b4fa;
+  --term-green: #a6e3a1;
+  --term-yellow: #f9e2af;
+  --term-bracket: #94e2d5;
+  --term-colon: #89dceb;
+  --term-key: #89b4fa;
+  --term-string: #a6e3a1;
+  --term-btn-close: #f38ba8;
+  --term-btn-min: #f9e2af;
+  --term-btn-max: #a6e3a1;
+  --term-highlight: #89b4fa;
   color-scheme: dark;
 }
 
@@ -86,6 +121,27 @@ body{
   line-height:1.6;
   -webkit-font-smoothing:antialiased;
   transition:background var(--dur-base) var(--ease-out), color var(--dur-base) var(--ease-out);
+  background: 
+    radial-gradient(circle at 15% 50%, color-mix(in oklch, var(--color-accent) 8%, transparent), transparent 40%),
+    radial-gradient(circle at 85% 30%, color-mix(in oklch, var(--color-accent) 5%, transparent), transparent 40%),
+    var(--color-paper);
+  background-attachment: fixed;
+}
+body::before {
+  content: "01001000 01010011 01000010  >_ INIT SYSTEM... OK. LOADING MODULES... DONE. AWAITING INPUT...";
+  position: fixed;
+  top: 10%;
+  left: -5%;
+  width: 150%;
+  font-family: var(--font-mono);
+  font-size: 4rem;
+  font-weight: 700;
+  color: var(--color-ink);
+  opacity: 0.02; /* Sangat transparan */
+  transform: rotate(-15deg);
+  pointer-events: none;
+  z-index: -1;
+  white-space: nowrap;
 }
 h1,h2,h3{
   font-family:var(--font-display);
@@ -643,6 +699,381 @@ footer{padding-block:var(--space-xl) var(--space-lg);border-top:1px solid var(--
   .portrait-frame,.status-dot{animation:none !important;}
   .hero h1 .tw-cursor{animation:none;opacity:1;}
 }
+
+/* ---------- Glitch Hover Effect ---------- */
+.glitch-hover {
+  position: relative;
+  display: inline-block;
+}
+.glitch-hover:hover {
+  animation: glitch-skew 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both infinite;
+}
+.glitch-hover:hover::before, .glitch-hover:hover::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0; left: 0;
+  opacity: 0.8;
+  white-space: nowrap;
+}
+.glitch-hover:hover::before {
+  color: #0ff;
+  z-index: -1;
+  animation: glitch-anim-1 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) both infinite;
+}
+.glitch-hover:hover::after {
+  color: #f0f;
+  z-index: -2;
+  animation: glitch-anim-2 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) both infinite reverse;
+}
+
+@keyframes glitch-skew {
+  0% { transform: skew(0deg); }
+  20% { transform: skew(-10deg); }
+  40% { transform: skew(10deg); }
+  60% { transform: skew(-5deg); }
+  80% { transform: skew(5deg); }
+  100% { transform: skew(0deg); }
+}
+@keyframes glitch-anim-1 {
+  0% { clip-path: inset(20% 0 80% 0); transform: translate(-2px, 1px); }
+  20% { clip-path: inset(60% 0 10% 0); transform: translate(2px, -1px); }
+  40% { clip-path: inset(40% 0 50% 0); transform: translate(-2px, 2px); }
+  60% { clip-path: inset(80% 0 5% 0); transform: translate(2px, -2px); }
+  80% { clip-path: inset(10% 0 70% 0); transform: translate(-1px, 1px); }
+  100% { clip-path: inset(30% 0 50% 0); transform: translate(1px, -1px); }
+}
+@keyframes glitch-anim-2 {
+  0% { clip-path: inset(10% 0 60% 0); transform: translate(2px, 1px); }
+  20% { clip-path: inset(30% 0 20% 0); transform: translate(-2px, -1px); }
+  40% { clip-path: inset(70% 0 10% 0); transform: translate(2px, 2px); }
+  60% { clip-path: inset(20% 0 50% 0); transform: translate(-2px, -2px); }
+  80% { clip-path: inset(50% 0 30% 0); transform: translate(1px, 1px); }
+  100% { clip-path: inset(5% 0 80% 0); transform: translate(-1px, -1px); }
+}
+
+/* ---------- Skills: JSON Terminal Mockup ---------- */
+.terminal-mockup {
+  background: var(--term-bg);
+  border-radius: var(--radius-lg); 
+  border: 1px solid var(--term-border);
+  overflow: hidden;
+  box-shadow: 0 4px 16px -8px color-mix(in oklch, var(--color-ink) 18%, transparent);
+  font-family: var(--font-mono);
+  margin-top: var(--space-md);
+  transition: transform var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out);
+}
+.terminal-mockup:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 16px -8px color-mix(in oklch, var(--color-ink) 18%, transparent);
+}
+.term-header {
+  display: flex;
+  align-items: center;
+  padding: 0.85rem 1.25rem;
+  background: var(--term-header-bg);
+  border-bottom: 1px solid var(--term-border);
+  position: relative;
+}
+.term-controls {
+  display: flex;
+  gap: 8px;
+}
+.term-btn {
+  width: 12px; height: 12px; border-radius: 50%;
+}
+/* macOS style buttons */
+.term-btn.close { background: var(--term-btn-close); }
+.term-btn.min { background: var(--term-btn-min); }
+.term-btn.max { background: var(--term-btn-max); }
+
+.term-title {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  color: var(--term-text-soft);
+  font-size: var(--text-xs);
+  letter-spacing: 0.02em;
+}
+
+.term-body {
+  padding: 1.5rem 1.5rem 1.5rem 2rem;
+  color: var(--term-text);
+  font-size: var(--text-sm);
+  line-height: 1.7;
+  overflow-x: auto;
+}
+.term-body pre {
+  margin: 0;
+}
+
+/* Syntax Highlighting */
+.json-bracket { color: #94e2d5; }
+.json-colon { color: #89dceb; }
+.json-key { color: #89b4fa; font-weight: 500; }
+.json-string { 
+  color: #a6e3a1; 
+  transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out);
+}
+.json-string:hover { 
+  color: #b9f27c; 
+  text-shadow: 0 0 10px rgba(166, 227, 161, 0.4); 
+  cursor: crosshair;
+}
+
+/* ---------- Projects: Terminal Window Cards ---------- */
+.term-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-md);
+}
+@media (max-width: 700px) { .term-grid { grid-template-columns: 1fr; } }
+
+.term-card {
+  background: #11111b; /* Dark terminal background */
+  border: 1px solid #313244;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out), border-color var(--dur-base) var(--ease-out);
+}
+.term-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 4px 16px -8px color-mix(in oklch, var(--color-ink) 18%, transparent);
+  border-color: #89b4fa; /* Accent highlight on hover */
+}
+
+.term-card-header {
+  background: #181825;
+  padding: 0.6rem 1.25rem;
+  border-bottom: 1px solid #313244;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: #bac2de;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.term-card .proj-media {
+  position: relative;
+  border-radius: 0;
+  margin-bottom: 0;
+  border-bottom: 1px solid #313244;
+  aspect-ratio: 16/10;
+  background: #1e1e2e;
+}
+/* Efek garis pindai (Scanline) CRT ala monitor lawas */
+.term-card .scanlines {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0) 50%, rgba(0,0,0,0.15) 50%, rgba(0,0,0,0.15));
+  background-size: 100% 4px;
+  pointer-events: none;
+  mix-blend-mode: overlay;
+  opacity: 0.8;
+}
+
+.term-card-body {
+  padding: 1.5rem;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  background: #11111b;
+}
+
+.term-tag {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: #89b4fa;
+  background: rgba(137, 180, 250, 0.1);
+  border: 1px solid rgba(137, 180, 250, 0.2);
+  padding: 0.25rem 0.6rem;
+  border-radius: 6px;
+  margin-right: 0.4rem;
+  margin-bottom: 1rem;
+}
+
+.term-card-body h3 {
+  font-size: var(--text-lg);
+  color: #cdd6f4;
+  margin-bottom: 0.5rem;
+}
+
+.term-card-body p {
+  color: #a6adc8;
+  font-size: var(--text-sm);
+  margin-bottom: 1.25rem;
+  flex-grow: 1;
+  line-height: 1.6;
+}
+
+.term-link {
+  align-self: flex-start;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: #a6e3a1;
+  text-decoration: none;
+  border-bottom: 1px dashed #a6e3a1;
+  padding-bottom: 2px;
+  transition: color var(--dur-fast), border-style var(--dur-fast);
+}
+.term-link:hover {
+  color: #b9f27c;
+  border-style: solid;
+}
+
+/* Call to Action - Prompt Bash Shell */
+.term-cta {
+  grid-column: 1 / -1;
+  background: #11111b;
+  border: 1px dashed #313244;
+  border-radius: var(--radius-md);
+  padding: 1.75rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  font-family: var(--font-mono);
+  transition: border-color var(--dur-base), background var(--dur-base);
+}
+.term-cta:hover {
+  border-color: #89b4fa;
+  background: #181825;
+}
+.term-cta .prompt-user { color: #a6e3a1; font-weight: 600; }
+.term-cta .prompt-colon { color: #cdd6f4; }
+.term-cta .prompt-dir { color: #89b4fa; font-weight: 600; }
+.term-cta .prompt-char { color: #cdd6f4; }
+.term-cta .cmd-text { color: #f9e2af; font-size: 1.1em; }
+
+.term-btn-outline {
+  border: 1px solid #89b4fa;
+  color: #89b4fa;
+  padding: 0.7rem 1.4rem;
+  border-radius: 6px;
+  font-size: var(--text-sm);
+  transition: background var(--dur-fast), color var(--dur-fast), transform var(--dur-fast);
+  cursor: pointer;
+}
+.term-btn-outline:hover {
+  background: #89b4fa;
+  color: #11111b;
+  transform: translateY(-2px);
+}
+
+/* ---------- Experience: TUI Dashboard (Clean Readability) ---------- */
+.tui-panel {
+  background: #11111b;
+  border-radius: var(--radius-lg);
+  border: 1px solid #313244;
+  overflow: hidden;
+  margin-top: var(--space-md);
+  box-shadow: 0 4px 16px -8px color-mix(in oklch, var(--color-ink) 18%, transparent);
+}
+.tui-header {
+  background: #181825;
+  padding: 0.85rem 1.25rem;
+  border-bottom: 1px solid #313244;
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: #bac2de;
+}
+.tui-body {
+  padding: 2.5rem;
+}
+@media (max-width: 640px) {
+  .tui-body { padding: 1.5rem; }
+}
+
+.job-entry {
+  border-left: 2px solid #313244;
+  padding-left: 1.75rem;
+  margin-bottom: 2.5rem;
+  position: relative;
+  transition: transform var(--dur-fast) var(--ease-out);
+}
+.job-entry:last-child { margin-bottom: 0; }
+.job-entry:hover { transform: translateX(4px); }
+@media (max-width: 640px) {
+  .job-entry { padding-left: 1.25rem; }
+}
+
+/* Indikator titik pada timeline */
+.job-entry::before {
+  content: '';
+  position: absolute;
+  left: -7px; /* Menempatkan titik persis di tengah garis 2px */
+  top: 0.25rem;
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  background: #89b4fa;
+  border: 2px solid #11111b; /* Memberi jarak pandang dengan garis vertikal */
+}
+/* Warna titik untuk pekerjaan terbaru (paling atas) */
+.job-entry:nth-child(1)::before { 
+  background: #a6e3a1; 
+  box-shadow: 0 0 8px rgba(166, 227, 161, 0.4); 
+}
+
+.job-meta {
+  margin-bottom: 1.25rem;
+}
+.job-date {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: #a6adc8;
+  display: inline-block;
+  margin-bottom: 0.6rem;
+  background: rgba(166, 173, 200, 0.1);
+  padding: 0.25rem 0.75rem;
+  border-radius: 4px;
+}
+.job-title {
+  font-size: var(--text-lg);
+  color: #cdd6f4;
+  margin: 0 0 0.2rem 0;
+}
+.job-company {
+  font-size: var(--text-sm);
+  color: #89b4fa;
+  font-family: var(--font-mono);
+}
+
+.job-tasks {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+.job-tasks li {
+  font-size: var(--text-sm);
+  color: #bac2de;
+  line-height: 1.6;
+  position: relative;
+  padding-left: 1.25rem;
+}
+/* Bullet point diganti menjadi tanda prompt > */
+.job-tasks li::before {
+  content: '>';
+  position: absolute;
+  left: 0;
+  top: 0.1rem;
+  font-family: var(--font-mono);
+  color: #313244;
+  font-weight: 600;
+  transition: color var(--dur-base) var(--ease-out);
+}
+.job-entry:hover .job-tasks li::before {
+  color: #f38ba8; /* Berubah warna muda saat di-hover */
+}
+
 </style>
 </head>
 <body>
@@ -651,7 +1082,7 @@ footer{padding-block:var(--space-xl) var(--space-lg);border-top:1px solid var(--
 
 <div class="nav-shell">
   <nav class="nav-pill wrap">
-    <a href="#top" class="nav-logo">hafizhesbe<span>.my.id</span></a>
+    <a href="#top" class="nav-logo glitch-hover" data-text="hafizhesbe.my.id">hafizhesbe<span>.my.id</span></a>
     <div class="nav-actions">
       <div class="nav-links">
         <a href="#about" data-i18n="nav.about">Tentang</a>
@@ -686,7 +1117,7 @@ footer{padding-block:var(--space-xl) var(--space-lg);border-top:1px solid var(--
     <div class="wrap hero-grid">
       <div class="hero-stagger">
         <span class="status-chip"><span class="status-dot"></span><span data-i18n="hero.status">status: terbuka untuk peluang baru</span></span>
-        <h1 data-i18n="hero.h1" data-i18n-text="hero.h1.text">Software Developer & <em>Problem Solver</em><span class="tw-cursor"></span></h1>
+        <h1 data-i18n="hero.h1" data-i18n-text="hero.h1.text">Software Developer &amp; <em>Problem Solver</em><span class="tw-cursor"></span></h1>
         <p class="hero-lede" data-i18n="hero.lede">Lulusan D3 Teknologi Informasi dengan pengalaman langsung menangani troubleshooting, instalasi, dan konfigurasi sistem: dari proyek IoT, pengembangan aplikasi, sampai operasional lapangan.</p>
         <div class="hero-actions">
           <a href="resume.pdf" class="btn btn-primary" data-i18n="hero.cta1" download>Download Resume</a>
@@ -738,71 +1169,98 @@ footer{padding-block:var(--space-xl) var(--space-lg);border-top:1px solid var(--
       <div class="section-head reveal">
         <span class="section-eyebrow mono-tag">~/experience</span>
         <h2 data-i18n="exp.h2">Riwayat kerja</h2>
-        <p class="section-sub" data-i18n="exp.sub">Urut dari yang terbaru: kombinasi peran operasional/IT support dan pengembangan software.</p>
+        <p class="section-sub" data-i18n="exp.sub">Urut dari yang terbaru: kombinasi peran operasional/IT support dan
+          pengembangan software.</p>
       </div>
-
-      <div class="timeline">
-        <div class="tl-item reveal" style="--d:0ms">
-          <div class="tl-date">Des 2024 – Jul 2025</div>
-          <div class="tl-role">
-            <h3 data-i18n="exp1.title">Staf Logistik</h3>
-            <span class="tl-org">CV Pramita Adhipramana</span>
-            <ul class="tl-list">
-              <li data-i18n="exp1.li1">Mengelola pengadaan, pencatatan, dan distribusi material untuk dua proyek konstruksi PT. Marina Bara Lestari di Kecamatan Segah, Kabupaten Berau.</li>
-              <li data-i18n="exp1.li2">Monitoring rutin ketersediaan dan kondisi peralatan/material untuk kelancaran operasional proyek.</li>
-              <li data-i18n="exp1.li3">Koordinasi dengan tim lapangan dan manajemen untuk dokumentasi serta pelaporan logistik tepat waktu.</li>
-              <li data-i18n="exp1.li4">Memberikan dukungan IT dasar on-site, termasuk troubleshooting komputer/printer kantor lapangan dan isu jaringan harian.</li>
+  
+      <!-- TUI Dashboard Terminal Mockup (Readability Focused) -->
+      <div class="tui-panel reveal" style="--d:100ms">
+        <div class="tui-header">
+          <span>sys.log // WORK_HISTORY</span>
+          <span style="color: #a6e3a1;">[ STATUS: ACTIVE ]</span>
+        </div>
+  
+        <div class="tui-body">
+          <!-- Job 1 -->
+          <div class="job-entry">
+            <div class="job-meta">
+              <span class="job-date">Des 2024 – Jul 2025</span>
+              <h3 class="job-title" data-i18n="exp1.title">Staf Logistik</h3>
+              <span class="job-company">@ CV Pramita Adhipramana</span>
+            </div>
+            <ul class="job-tasks">
+              <li data-i18n="exp1.li1">Mengelola pengadaan, pencatatan, dan distribusi material untuk dua proyek
+                konstruksi PT. Marina Bara Lestari di Kecamatan Segah, Kabupaten Berau.</li>
+              <li data-i18n="exp1.li2">Monitoring rutin ketersediaan dan kondisi peralatan/material untuk kelancaran
+                operasional proyek.</li>
+              <li data-i18n="exp1.li3">Koordinasi dengan tim lapangan dan manajemen untuk dokumentasi serta pelaporan
+                logistik tepat waktu.</li>
+              <li data-i18n="exp1.li4">Memberikan dukungan IT dasar on-site, termasuk troubleshooting komputer/printer
+                kantor lapangan dan isu jaringan harian.</li>
             </ul>
           </div>
-        </div>
-
-        <div class="tl-item reveal" style="--d:70ms">
-          <div class="tl-date">Mei – Sep 2024</div>
-          <div class="tl-role">
-            <h3 data-i18n="exp2.title">Software Developer Team</h3>
-            <span class="tl-org">Eforel InnoWorks</span>
-            <ul class="tl-list">
-              <li data-i18n="exp2.li1">Mengintegrasikan sistem hardware &amp; software untuk proyek IoT, termasuk membangun dashboard monitoring dengan tools Advantech.</li>
-              <li data-i18n="exp2.li2">Troubleshooting dan konfigurasi perangkat untuk mengembangkan solusi berbasis IoT dan optimasi sistem monitoring.</li>
+  
+          <!-- Job 2 -->
+          <div class="job-entry">
+            <div class="job-meta">
+              <span class="job-date">Mei – Sep 2024</span>
+              <h3 class="job-title" data-i18n="exp2.title">Software Developer Team</h3>
+              <span class="job-company">@ Eforel InnoWorks</span>
+            </div>
+            <ul class="job-tasks">
+              <li data-i18n="exp2.li1">Mengintegrasikan sistem hardware & software untuk proyek IoT, termasuk membangun
+                dashboard monitoring dengan tools Advantech.</li>
+              <li data-i18n="exp2.li2">Troubleshooting dan konfigurasi perangkat untuk mengembangkan solusi berbasis IoT
+                dan optimasi sistem monitoring.</li>
             </ul>
           </div>
-        </div>
-
-        <div class="tl-item reveal" style="--d:140ms">
-          <div class="tl-date">Feb – Jul 2024</div>
-          <div class="tl-role">
-            <h3 data-i18n="exp3.title">Mobile Development Cohort</h3>
-            <span class="tl-org">Bangkit Academy</span>
-            <ul class="tl-list">
+  
+          <!-- Job 3 -->
+          <div class="job-entry">
+            <div class="job-meta">
+              <span class="job-date">Feb – Jul 2024</span>
+              <h3 class="job-title" data-i18n="exp3.title">Mobile Development Cohort</h3>
+              <span class="job-company">@ Bangkit Academy</span>
+            </div>
+            <ul class="job-tasks">
               <li data-i18n="exp3.li1">Menyelesaikan bootcamp intensif untuk memperdalam skill pengembangan Android.</li>
-              <li data-i18n="exp3.li2">Bekerja dalam tim membangun StuntZilla, aplikasi mobile untuk deteksi gejala stunting.</li>
+              <li data-i18n="exp3.li2">Bekerja dalam tim membangun StuntZilla, aplikasi mobile untuk deteksi gejala
+                stunting.</li>
             </ul>
           </div>
-        </div>
-
-        <div class="tl-item reveal" style="--d:210ms">
-          <div class="tl-date">Jun 2023 – Jan 2024</div>
-          <div class="tl-role">
-            <h3 data-i18n="exp4.title">Freelance Fullstack Developer</h3>
-            <span class="tl-org" data-i18n="exp4.org">Remote</span>
-            <ul class="tl-list">
-              <li data-i18n="exp4.li1">Mengembangkan website Simag untuk Kominfo Ngawi menggunakan Laravel untuk manajemen tugas administratif.</li>
-              <li data-i18n="exp4.li2">Membangun sistem e-Ticketing untuk Kominfo Ngawi menggunakan Laravel untuk manajemen event dan data pengguna.</li>
+  
+          <!-- Job 4 -->
+          <div class="job-entry">
+            <div class="job-meta">
+              <span class="job-date">Jun 2023 – Jan 2024</span>
+              <h3 class="job-title" data-i18n="exp4.title">Freelance Fullstack Developer</h3>
+              <span class="job-company">@ <span data-i18n="exp4.org">Remote</span></span>
+            </div>
+            <ul class="job-tasks">
+              <li data-i18n="exp4.li1">Mengembangkan website Simag untuk Kominfo Ngawi menggunakan Laravel untuk manajemen
+                tugas administratif.</li>
+              <li data-i18n="exp4.li2">Membangun sistem e-Ticketing untuk Kominfo Ngawi menggunakan Laravel untuk
+                manajemen event dan data pengguna.</li>
             </ul>
           </div>
-        </div>
-
-        <div class="tl-item reveal" style="--d:280ms">
-          <div class="tl-date">Jun – Nov 2023</div>
-          <div class="tl-role">
-            <h3 data-i18n="exp5.title">Software Engineer Intern</h3>
-            <span class="tl-org">PT Industri Kereta Api (Persero)</span>
-            <ul class="tl-list">
-              <li data-i18n="exp5.li1">Mengembangkan dashboard website INKA-CSIRT untuk manajemen artikel menggunakan Laravel.</li>
-              <li data-i18n="exp5.li2">Enhance &amp; maintain fitur website e-Procurement INKA dengan Symfony, menangani 50+ akun vendor termasuk resolusi isu akses pengguna.</li>
-              <li data-i18n="exp5.li3">Berkolaborasi dengan tim IT untuk pengembangan fitur guna mencapai target pengguna.</li>
+  
+          <!-- Job 5 -->
+          <div class="job-entry">
+            <div class="job-meta">
+              <span class="job-date">Jun – Nov 2023</span>
+              <h3 class="job-title" data-i18n="exp5.title">Software Engineer Intern</h3>
+              <span class="job-company">@ PT Industri Kereta Api (Persero)</span>
+            </div>
+            <ul class="job-tasks">
+              <li data-i18n="exp5.li1">Mengembangkan dashboard website INKA-CSIRT untuk manajemen artikel menggunakan
+                Laravel.</li>
+              <li data-i18n="exp5.li2">Enhance & maintain fitur website e-Procurement INKA dengan Symfony, menangani 50+
+                akun vendor termasuk resolusi isu akses pengguna.</li>
+              <li data-i18n="exp5.li3">Berkolaborasi dengan tim IT untuk pengembangan fitur guna mencapai target pengguna.
+              </li>
             </ul>
           </div>
+  
         </div>
       </div>
     </div>
@@ -813,53 +1271,102 @@ footer{padding-block:var(--space-xl) var(--space-lg);border-top:1px solid var(--
       <div class="section-head reveal">
         <span class="section-eyebrow mono-tag">~/projects</span>
         <h2 data-i18n="proj.h2">Proyek pilihan</h2>
-        <p class="section-sub" data-i18n="proj.sub">Detail proyek sedang disiapkan: sementara ini bisa dilihat langsung di GitHub.</p>
+        <p class="section-sub" data-i18n="proj.sub">Detail proyek sedang disiapkan: sementara ini bisa dilihat langsung di
+          GitHub.</p>
       </div>
-      <div class="proj-grid">
-        <div class="proj-card reveal" style="--d:0ms">
-          <div class="proj-media">
-            <img src="src/inka/Screenshot_20260803_110422.png" alt="INKA e-Procurement" width="1280" height="800" loading="lazy">
+  
+      <div class="term-grid">
+        <!-- Project 1: INKA -->
+        <div class="term-card reveal" style="--d:0ms">
+          <div class="term-card-header">
+            <span>> ./inka_eprocurement.sh</span>
+            <span style="color:#a6e3a1;">[RUNNING]</span>
           </div>
-          <div>
-            <span class="mono-tag">Laravel · Symfony</span>
+          <div class="proj-media">
+            <img src="src/inka/Screenshot_20260803_110422.png" alt="INKA e-Procurement" loading="lazy">
+            <div class="scanlines"></div>
+          </div>
+          <div class="term-card-body">
+            <div>
+              <span class="term-tag">Laravel</span> <span class="term-tag">Symfony</span>
+            </div>
             <h3 data-i18n="proj.p1.title">INKA - e-Procurement</h3>
-            <p data-i18n="proj.p1.desc">Website untuk procurement online, menangani 50+ vendor account termasuk resolusi akses pengguna.</p>
+            <p data-i18n="proj.p1.desc">Website untuk procurement online, menangani 50+ vendor account termasuk resolusi
+              akses pengguna.</p>
           </div>
         </div>
-        <div class="proj-card reveal" style="--d:80ms">
-          <div class="proj-media">
-            <img src="src/radmonitor/preview.png" alt="MonitorRad" width="1280" height="800" loading="lazy">
+  
+        <!-- Project 2: MonitorRad -->
+        <div class="term-card reveal" style="--d:80ms">
+          <div class="term-card-header">
+            <span>> php artisan serve --rad</span>
+            <span style="color:#a6e3a1;">[OK]</span>
           </div>
-          <div>
-            <span class="mono-tag">Laravel</span>
+          <div class="proj-media">
+            <img src="src/radmonitor/preview.png" alt="MonitorRad" loading="lazy">
+            <div class="scanlines"></div>
+          </div>
+          <div class="term-card-body">
+            <div>
+              <span class="term-tag">Laravel</span>
+            </div>
             <h3 data-i18n="proj.p2.title">MonitorRad</h3>
             <p data-i18n="proj.p2.desc">Website monitoring radiasi B3 dengan sistem early warning via Telegram bot.</p>
-            <a href="https://github.com/hafizhsul/MonitorRad" class="btn btn-ghost" target="_blank" rel="noopener" style="margin-top:var(--space-sm);font-size:var(--text-xs);padding:.4rem .8rem;">View on GitHub →</a>
+            <a href="https://github.com/hafizhsul/MonitorRad" class="term-link" target="_blank" rel="noopener">View on
+              GitHub →</a>
           </div>
         </div>
-        <div class="proj-card reveal" style="--d:160ms">
-          <div class="proj-media">
-            <img src="src/stuntzilla/preview.png" alt="StuntZilla" width="1280" height="800" loading="lazy">
+  
+        <!-- Project 3: StuntZilla -->
+        <div class="term-card reveal" style="--d:160ms">
+          <div class="term-card-header">
+            <span>> ./gradlew assembleDebug</span>
+            <span style="color:#f9e2af;">[BUILDING...]</span>
           </div>
-          <div>
-            <span class="mono-tag">Kotlin</span>
+          <div class="proj-media">
+            <img src="src/stuntzilla/preview.png" alt="StuntZilla" loading="lazy">
+            <div class="scanlines"></div>
+          </div>
+          <div class="term-card-body">
+            <div>
+              <span class="term-tag">Kotlin</span>
+            </div>
             <h3 data-i18n="proj.p3.title">StuntZilla</h3>
             <p data-i18n="proj.p3.desc">Aplikasi mobile untuk deteksi gejala stunting.</p>
           </div>
         </div>
-        <div class="proj-card reveal" style="--d:240ms">
-          <div class="proj-media">
-            <img src="src/intervalfit/preview.png" alt="IntervalFit" width="1280" height="800" loading="lazy">
+  
+        <!-- Project 4: IntervalFit -->
+        <div class="term-card reveal" style="--d:240ms">
+          <div class="term-card-header">
+            <span>> flutter run -d linux</span>
+            <span style="color:#a6e3a1;">[OK]</span>
           </div>
-          <div>
-            <span class="mono-tag">Flutter</span>
+          <div class="proj-media">
+            <img src="src/intervalfit/preview.png" alt="IntervalFit" loading="lazy">
+            <div class="scanlines"></div>
+          </div>
+          <div class="term-card-body">
+            <div>
+              <span class="term-tag">Flutter</span>
+            </div>
             <h3 data-i18n="proj.p4.title">IntervalFit</h3>
-            <p data-i18n="proj.p4.desc">Interval timer cepat setup, mudah dibaca saat olahraga, dengan voice countdown otomatis.</p>
+            <p data-i18n="proj.p4.desc">Interval timer cepat setup, mudah dibaca saat olahraga, dengan voice countdown
+              otomatis.</p>
           </div>
         </div>
-        <div class="proj-cta reveal" style="--d:320ms">
-          <p data-i18n="proj.ctatext">Repository lain tersedia di GitHub.</p>
-          <a href="https://github.com/hafizhsul" class="btn btn-ghost" target="_blank" rel="noopener" data-i18n="proj.ctabtn">Buka GitHub →</a>
+  
+        <!-- Call to Action Box (Terminal Shell style) -->
+        <div class="term-cta reveal" style="--d:320ms">
+          <div>
+            <span class="prompt-user">guest@hafizh</span><span class="prompt-colon">:</span><span
+              class="prompt-dir">~/projects</span><span class="prompt-char">$</span>
+            <span class="cmd-text" style="margin-left: 8px;">ls -al github_repos/</span>
+            <p data-i18n="proj.ctatext" style="margin-top: 10px; color: #a6adc8; font-family: var(--font-body);">
+              Repository lain tersedia di GitHub.</p>
+          </div>
+          <a href="https://github.com/hafizhsul" class="term-btn-outline" target="_blank" rel="noopener"
+            data-i18n="proj.ctabtn">Buka GitHub →</a>
         </div>
       </div>
     </div>
@@ -871,43 +1378,50 @@ footer{padding-block:var(--space-xl) var(--space-lg);border-top:1px solid var(--
         <span class="section-eyebrow mono-tag">~/skills</span>
         <h2 data-i18n="skills.h2">Kemampuan</h2>
       </div>
-      <div class="skill-groups">
-        <div class="skill-group reveal" style="--d:0ms">
-          <h3 data-i18n="skills.g1">Technical Support</h3>
-          <div class="chip-row">
-            <span class="chip" data-i18n="skills.g1c1">Troubleshooting hardware &amp; software</span>
-            <span class="chip" data-i18n="skills.g1c2">Instalasi aplikasi</span>
-            <span class="chip" data-i18n="skills.g1c3">Konfigurasi sistem</span>
-            <span class="chip" data-i18n="skills.g1c4">Remote support</span>
-            <span class="chip" data-i18n="skills.g1c5">Jaringan komputer dasar</span>
+  
+      <!-- Terminal Window Mockup untuk Skills -->
+      <div class="terminal-mockup reveal" style="--d:100ms">
+        <div class="term-header">
+          <div class="term-controls">
+            <span class="term-btn close"></span>
+            <span class="term-btn min"></span>
+            <span class="term-btn max"></span>
           </div>
+          <span class="term-title">skills.json &mdash; nvim</span>
         </div>
-        <div class="skill-group reveal" style="--d:60ms">
-          <h3 data-i18n="skills.g2">Bahasa Pemrograman</h3>
-          <div class="chip-row">
-            <span class="chip">PHP</span>
-            <span class="chip">Kotlin</span>
-            <span class="chip">JavaScript</span>
-            <span class="chip">C++</span>
-          </div>
-        </div>
-        <div class="skill-group reveal" style="--d:120ms">
-          <h3 data-i18n="skills.g3">Tools &amp; Sistem</h3>
-          <div class="chip-row">
-            <span class="chip">Laravel</span>
-            <span class="chip">Symfony</span>
-            <span class="chip">Advantech Monitoring</span>
-          </div>
-        </div>
-        <div class="skill-group reveal" style="--d:180ms">
-          <h3 data-i18n="skills.g4">Soft Skills</h3>
-          <div class="chip-row">
-            <span class="chip" data-i18n="skills.g4c1">Kolaborasi tim</span>
-            <span class="chip" data-i18n="skills.g4c2">Komunikasi pengguna</span>
-            <span class="chip" data-i18n="skills.g4c3">Berpikir kritis</span>
-            <span class="chip" data-i18n="skills.g4c4">Manajemen waktu</span>
-            <span class="chip" data-i18n="skills.g4c5">Problem solving</span>
-          </div>
+        <div class="term-body">
+          <pre><code class="json-code">
+  <span class="json-bracket">{</span>
+    <span class="json-key">"Technical Support"</span><span class="json-colon">:</span> <span class="json-bracket">[</span>
+      <span class="json-string">"<span data-i18n="skills.g1c1">Troubleshooting hardware & software</span>"</span>,
+      <span class="json-string">"<span data-i18n="skills.g1c2">Instalasi aplikasi</span>"</span>,
+      <span class="json-string">"<span data-i18n="skills.g1c3">Konfigurasi sistem</span>"</span>,
+      <span class="json-string">"<span data-i18n="skills.g1c4">Remote support</span>"</span>,
+      <span class="json-string">"<span data-i18n="skills.g1c5">Jaringan komputer dasar</span>"</span>
+    <span class="json-bracket">]</span>,
+    
+    <span class="json-key">"Bahasa Pemrograman"</span><span class="json-colon">:</span> <span class="json-bracket">[</span>
+      <span class="json-string">"PHP"</span>,
+      <span class="json-string">"Kotlin"</span>,
+      <span class="json-string">"JavaScript"</span>,
+      <span class="json-string">"C++"</span>
+    <span class="json-bracket">]</span>,
+    
+    <span class="json-key">"Tools & Sistem"</span><span class="json-colon">:</span> <span class="json-bracket">[</span>
+      <span class="json-string">"Laravel"</span>,
+      <span class="json-string">"Symfony"</span>,
+      <span class="json-string">"Advantech Monitoring"</span>
+    <span class="json-bracket">]</span>,
+    
+    <span class="json-key">"Soft Skills"</span><span class="json-colon">:</span> <span class="json-bracket">[</span>
+      <span class="json-string">"<span data-i18n="skills.g4c1">Kolaborasi tim</span>"</span>,
+      <span class="json-string">"<span data-i18n="skills.g4c2">Komunikasi pengguna</span>"</span>,
+      <span class="json-string">"<span data-i18n="skills.g4c3">Berpikir kritis</span>"</span>,
+      <span class="json-string">"<span data-i18n="skills.g4c4">Manajemen waktu</span>"</span>,
+      <span class="json-string">"<span data-i18n="skills.g4c5">Problem solving</span>"</span>
+    <span class="json-bracket">]</span>
+  <span class="json-bracket">}</span>
+  </code></pre>
         </div>
       </div>
     </div>
@@ -917,7 +1431,7 @@ footer{padding-block:var(--space-xl) var(--space-lg);border-top:1px solid var(--
     <div class="wrap footer-statement reveal">
       <span class="section-eyebrow mono-tag">~/contact</span>
       <h2 style="margin-top:.6rem;" data-i18n="footer.h2">Terbuka untuk peran IT Support/Helpdesk maupun kolaborasi proyek software. <a href="mailto:hafizhbachtiyar123@gmail.com" data-i18n-inline="footer.h2link">Mari mengobrol →</a></h2>
-
+      
       <div class="footer-links">
         <a class="footer-link" href="mailto:hafizhbachtiyar123@gmail.com"><span data-i18n="footer.email">Email</span> : hafizhbachtiyar123@gmail.com</a>
         <a class="footer-link" href="https://wa.me/6282235769474" target="_blank" rel="noopener">WhatsApp : (+62) 822-3576-9474</a>
@@ -966,8 +1480,8 @@ footer{padding-block:var(--space-xl) var(--space-lg);border-top:1px solid var(--
       "nav.skills": "Skills",
       "nav.cta": "Get in touch",
       "hero.status": "status: open to work",
-      "hero.h1": "Software Developer       "hero.h1": "IT Support &amp; Helpdesk who also <em>builds software</em>", <em>Problem Solver</em>",
-      "hero.h1.text": "Software Developer "hero.h1.text": "IT Support & Helpdesk who also builds software" Problem Solver",
+      "hero.h1": "Software Developer &amp; <em>Problem Solver</em>",
+      "hero.h1.text": "Software Developer & Problem Solver",
       "hero.lede": "Information Technology graduate with hands-on experience in troubleshooting, installing, and configuring systems: across IoT projects, application development, and field operations.",
       "hero.location": "East Java, Indonesia",
       "hero.cta1": "Download Resume",
@@ -1132,12 +1646,10 @@ footer{padding-block:var(--space-xl) var(--space-lg);border-top:1px solid var(--
     // dynamically compute emStart: find "membangun" (ID) or "builds" (EN) in the translated text
     var plainText = dict && dict[plainKey] ? dict[plainKey] : (heroH1.getAttribute('data-tw-text-id') || '');
     if (!plainText) {
-      plainText = lang === 'en'
-        ? 'Software Developer 'IT Support & Helpdesk who also builds software' Problem Solver'
-        : 'Software Developer 'IT Support & Helpdesk yang juga membangun software' Problem Solver';
+      plainText = 'Software Developer & Problem Solver';
     }
     var emStart = plainText.toLowerCase().indexOf('problem solver');
-    if (emStart === -1) emStart = 33; // fallback
+    if (emStart === -1) emStart = 19; // fallback
     runTypewriter(plainText, emStart);
   }
 
@@ -1207,8 +1719,48 @@ footer{padding-block:var(--space-xl) var(--space-lg);border-top:1px solid var(--
   }
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
+
+  // ---------- Interaktif: Text Scramble (Decode) saat di-scroll ----------
+  function scrambleText(element) {
+    var originalText = element.getAttribute('data-original-text') || element.innerText;
+    element.setAttribute('data-original-text', originalText);
+    var chars = '!<>-_\\/[]{}—=+*^?#________';
+    var iteration = 0;
+
+    // Cegah animasi double jika masih berjalan
+    if (element.scrambleInterval) clearInterval(element.scrambleInterval);
+
+    element.scrambleInterval = setInterval(function () {
+      element.innerText = originalText.split('').map(function (letter, index) {
+        if (index < iteration) return originalText[index]; // Huruf asli jika iterasi lewat
+        if (letter === ' ') return ' '; // Abaikan spasi
+        return chars[Math.floor(Math.random() * chars.length)];
+      }).join('');
+
+      if (iteration >= originalText.length) {
+        clearInterval(element.scrambleInterval);
+      }
+      iteration += 1 / 2; // Kecepatan decode
+    }, 30);
+  }
+
+  // Menerapkan scramble ke semua heading <h2> (kecuali hero) saat masuk viewport
+  if (!reduceMotion && 'IntersectionObserver' in window) {
+    var scrambleIO = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          var h2 = entry.target.querySelector('h2');
+          if (h2) scrambleText(h2);
+          scrambleIO.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -8% 0px' });
+
+    document.querySelectorAll('.section-head, .about-text').forEach(function (el) {
+      scrambleIO.observe(el);
+    });
+  }
 })();
 </script>
-
 </body>
 </html>
