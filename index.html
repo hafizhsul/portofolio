@@ -21,7 +21,7 @@
   --color-paper: oklch(97.5% 0.004 250);
   --color-paper-2: oklch(99.4% 0.002 250);
   --color-ink: oklch(21% 0.02 255);
-  --color-ink-soft: oklch(38% 0.02 255);
+  --color-ink-soft: oklch(34% 0.02 255);
   --color-line: oklch(87% 0.006 250);
   --color-accent: oklch(52% 0.17 258);
   --color-accent-ink: oklch(98% 0.005 250);
@@ -119,27 +119,42 @@ body{
   line-height:1.6;
   -webkit-font-smoothing:antialiased;
   transition:background var(--dur-base) var(--ease-out), color var(--dur-base) var(--ease-out);
-  background: 
+  background:
     radial-gradient(circle at 15% 50%, color-mix(in oklch, var(--color-accent) 8%, transparent), transparent 40%),
     radial-gradient(circle at 85% 30%, color-mix(in oklch, var(--color-accent) 5%, transparent), transparent 40%),
     var(--color-paper);
-  background-attachment: fixed;
 }
-body::before {
-  content: "01001000 01010011 01000010  >_ INIT SYSTEM... OK. LOADING MODULES... DONE. AWAITING INPUT...";
+/* ---------- Parallax Background ---------- */
+.parallax-container {
   position: fixed;
-  top: 10%;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  overflow: hidden;
+}
+.px-item {
+  position: absolute;
+  will-change: transform; /* Optimasi render browser */
+}
+.px-item.watermark {
+  top: 15%;
   left: -5%;
   width: 150%;
   font-family: var(--font-mono);
-  font-size: 4rem;
+  font-size: clamp(3rem, 8vw, 6rem);
   font-weight: 700;
   color: var(--color-ink);
-  opacity: 0.02; /* Sangat transparan */
-  transform: rotate(-15deg);
-  pointer-events: none;
-  z-index: -1;
+  opacity: 0.02; /* Transparansi sangat rendah agar halus */
   white-space: nowrap;
+  /* Rotasi dasar, pergerakannya diurus oleh JavaScript */
+  transform: rotate(-15deg); 
+}
+.px-item.glyph {
+  font-family: var(--font-mono);
+  font-size: clamp(2rem, 5vw, 4rem);
+  font-weight: 700;
+  color: var(--color-ink);
+  opacity: 0.03;
 }
 h1,h2,h3{
   font-family:var(--font-display);
@@ -416,7 +431,7 @@ a:focus-visible,button:focus-visible,.pill-link:focus-visible{
 }
 .portrait-caption span{
   display:block;font-family:var(--font-mono);font-size:var(--text-xs);
-  color:oklch(98% 0 0);
+  color:var(--color-accent-ink);
 }
 
 /* ---------- Section chrome: prompt-style eyebrows ---------- */
@@ -716,12 +731,12 @@ footer{padding-block:var(--space-xl) var(--space-lg);border-top:1px solid var(--
   white-space: nowrap;
 }
 .glitch-hover:hover::before {
-  color: #0ff;
+  color: var(--color-accent);
   z-index: -1;
   animation: glitch-anim-1 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) both infinite;
 }
 .glitch-hover:hover::after {
-  color: #f0f;
+  color: var(--color-good);
   z-index: -2;
   animation: glitch-anim-2 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) both infinite reverse;
 }
@@ -949,6 +964,17 @@ footer{padding-block:var(--space-xl) var(--space-lg);border-top:1px solid var(--
 .term-cta .prompt-char { color: var(--term-text); }
 .term-cta .cmd-text { color: var(--term-yellow); font-size: 1.1em; }
 
+/* Status badges */
+.status-badge {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: 500;
+}
+.status-badge--running { color: var(--term-green); }
+.status-badge--ok { color: var(--term-green); }
+.status-badge--building { color: var(--term-yellow); }
+.status-badge--active { color: var(--term-green); }
+
 .term-btn-outline {
   border: 1px solid var(--term-accent);
   color: var(--term-accent);
@@ -1092,9 +1118,68 @@ footer{padding-block:var(--space-xl) var(--space-lg);border-top:1px solid var(--
   background: var(--color-paper);
   border-right: 1px solid var(--color-line);
   flex-shrink: 0;
+  position: relative;
 }
 @media (max-width: 640px) {
-  .editor-sidebar { display: none; } /* Sembunyikan sidebar di mobile */
+  .editor-sidebar {
+    position: fixed;
+    top: 0;
+    left: -260px;
+    height: 100vh;
+    width: 240px;
+    max-width: 85vw;
+    z-index: 100;
+    border-right: 1px solid var(--color-line);
+    box-shadow: 4px 0 24px -8px color-mix(in oklch, var(--color-ink) 20%, transparent);
+    transform: translateX(0);
+    transition: left var(--dur-base) var(--ease-out);
+    overflow-y: auto;
+  }
+  .editor-sidebar.is-open {
+    left: 0;
+  }
+  .editor-sidebar::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: color-mix(in oklch, var(--color-ink) 40%, transparent);
+    opacity: 0;
+    visibility: hidden;
+    z-index: -1;
+    transition: opacity var(--dur-base) var(--ease-out), visibility var(--dur-base) var(--ease-out);
+  }
+  .editor-sidebar.is-open::before {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+/* Mobile sidebar toggle button */
+.editor-sidebar-toggle {
+  display: none;
+  position: fixed;
+  bottom: var(--space-lg);
+  right: var(--space-lg);
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--color-ink);
+  color: var(--color-accent-ink);
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 16px -8px color-mix(in oklch, var(--color-ink) 30%, transparent);
+  z-index: 99;
+  align-items: center;
+  justify-content: center;
+}
+@media (max-width: 640px) {
+  .editor-sidebar-toggle {
+    display: flex;
+  }
+}
+.editor-sidebar-toggle:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
 }
 
 .editor-sidebar-title {
@@ -1227,6 +1312,19 @@ footer{padding-block:var(--space-xl) var(--space-lg);border-top:1px solid var(--
 </head>
 <body>
 
+<!-- Background Parallax Layer -->
+<div class="parallax-container" aria-hidden="true">
+  <!-- Teks berjalan lambat (nilai speed kecil) -->
+  <div class="px-item watermark" data-speed="0.15">
+    01001000 01010011 01000010 >_ INIT SYSTEM... OK. LOADING MODULES... DONE. AWAITING INPUT... 01010011
+  </div>
+  <!-- Simbol mengambang dengan kecepatan dan arah berbeda (positif/negatif) -->
+  <div class="px-item glyph" data-speed="-0.12" style="top: 25%; left: 8%;">>_</div>
+  <div class="px-item glyph" data-speed="0.25" style="top: 45%; left: 88%;">{}</div>
+  <div class="px-item glyph" data-speed="-0.18" style="top: 70%; left: 12%;">/></div>
+  <div class="px-item glyph" data-speed="0.1" style="top: 85%; left: 82%;">()</div>
+</div>
+
 <a href="#top" class="skip-link">Skip to main content</a>
 
 <div class="nav-shell">
@@ -1301,23 +1399,28 @@ footer{padding-block:var(--space-xl) var(--space-lg);border-top:1px solid var(--
       </div>
   
       <!-- IDE / Code Editor Mockup -->
-      <div class="editor-window reveal" style="--d:100ms">
-  
-        <!-- Sidebar Explorer -->
-        <div class="editor-sidebar">
-          <div class="editor-sidebar-title">EXPLORER</div>
-          <ul class="file-tree">
-            <li class="folder">portfolio</li>
-            <ul class="folder-content">
-              <li class="file active">readme.md</li>
-              <li class="file">skills.json</li>
-              <li class="file">experience.log</li>
-            </ul>
-          </ul>
-        </div>
-  
-        <!-- Main Editor Area -->
-        <div class="editor-main">
+            <div class="editor-window reveal" style="--d:100ms">
+
+              <!-- Sidebar Explorer -->
+              <div class="editor-sidebar">
+                <div class="editor-sidebar-title">EXPLORER</div>
+                <ul class="file-tree">
+                  <li class="folder">portfolio</li>
+                  <ul class="folder-content">
+                    <li class="file active">readme.md</li>
+                    <li class="file">skills.json</li>
+                    <li class="file">experience.log</li>
+                  </ul>
+                </ul>
+              </div>
+
+              <!-- Mobile sidebar toggle -->
+              <button class="editor-sidebar-toggle" aria-label="Toggle file explorer" aria-expanded="false">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+              </button>
+
+              <!-- Main Editor Area -->
+              <div class="editor-main">
           <div class="editor-tabs">
             <div class="tab active">
               <span class="tab-icon">📄</span> readme.md
@@ -1369,7 +1472,7 @@ footer{padding-block:var(--space-xl) var(--space-lg);border-top:1px solid var(--
       <div class="tui-panel reveal" style="--d:100ms">
         <div class="tui-header">
           <span>sys.log // WORK_HISTORY</span>
-          <span style="color: var(--term-green);">[ STATUS: ACTIVE ]</span>
+          <span class="status-badge status-badge--active">[ STATUS: ACTIVE ]</span>
         </div>
   
         <div class="tui-body">
@@ -1472,7 +1575,7 @@ footer{padding-block:var(--space-xl) var(--space-lg);border-top:1px solid var(--
         <div class="term-card reveal" style="--d:0ms">
           <div class="term-card-header">
             <span>> ./inka_eprocurement.sh</span>
-            <span style="color: var(--term-green);">[RUNNING]</span>
+            <span class="status-badge status-badge--running">[RUNNING]</span>
           </div>
           <div class="proj-media">
             <img src="src/inka/Screenshot_20260803_110422.png" alt="INKA e-Procurement" loading="lazy">
@@ -1492,7 +1595,7 @@ footer{padding-block:var(--space-xl) var(--space-lg);border-top:1px solid var(--
         <div class="term-card reveal" style="--d:80ms">
           <div class="term-card-header">
             <span>> php artisan serve --rad</span>
-            <span style="color: var(--term-green);">[OK]</span>
+            <span class="status-badge status-badge--ok">[OK]</span>
           </div>
           <div class="proj-media">
             <img src="src/radmonitor/preview.png" alt="MonitorRad" loading="lazy">
@@ -1513,7 +1616,7 @@ footer{padding-block:var(--space-xl) var(--space-lg);border-top:1px solid var(--
         <div class="term-card reveal" style="--d:160ms">
           <div class="term-card-header">
             <span>> ./gradlew assembleDebug</span>
-            <span style="color: var(--term-yellow);">[BUILDING...]</span>
+            <span class="status-badge status-badge--building">[BUILDING...]</span>
           </div>
           <div class="proj-media">
             <img src="src/stuntzilla/preview.png" alt="StuntZilla" loading="lazy">
@@ -1532,7 +1635,7 @@ footer{padding-block:var(--space-xl) var(--space-lg);border-top:1px solid var(--
         <div class="term-card reveal" style="--d:240ms">
           <div class="term-card-header">
             <span>> flutter run -d linux</span>
-            <span style="color: var(--term-green);">[OK]</span>
+            <span class="status-badge status-badge--ok">[OK]</span>
           </div>
           <div class="proj-media">
             <img src="src/intervalfit/preview.png" alt="IntervalFit" loading="lazy">
@@ -1895,31 +1998,56 @@ footer{padding-block:var(--space-xl) var(--space-lg);border-top:1px solid var(--
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
 
-  // ---------- Interaktif: Text Scramble (Decode) saat di-scroll ----------
-  function scrambleText(element) {
-    var originalText = element.getAttribute('data-original-text') || element.innerText;
-    element.setAttribute('data-original-text', originalText);
-    var chars = '!<>-_\\/[]{}—=+*^?#________';
-    var iteration = 0;
-
-    // Cegah animasi double jika masih berjalan
-    if (element.scrambleInterval) clearInterval(element.scrambleInterval);
-
-    element.scrambleInterval = setInterval(function () {
-      element.innerText = originalText.split('').map(function (letter, index) {
-        if (index < iteration) return originalText[index]; // Huruf asli jika iterasi lewat
-        if (letter === ' ') return ' '; // Abaikan spasi
-        return chars[Math.floor(Math.random() * chars.length)];
-      }).join('');
-
-      if (iteration >= originalText.length) {
-        clearInterval(element.scrambleInterval);
+  // ---------- Mobile Editor Sidebar Toggle ----------
+  var sidebar = document.querySelector('.editor-sidebar');
+  var sidebarToggle = document.querySelector('.editor-sidebar-toggle');
+  if (sidebar && sidebarToggle) {
+    sidebarToggle.addEventListener('click', function() {
+      var isOpen = sidebar.classList.toggle('is-open');
+      sidebarToggle.setAttribute('aria-expanded', isOpen);
+      sidebarToggle.setAttribute('aria-label', isOpen ? 'Close file explorer' : 'Open file explorer');
+    });
+    // Close sidebar when clicking overlay
+    sidebar.addEventListener('click', function(e) {
+      if (e.target === sidebar) {
+        sidebar.classList.remove('is-open');
+        sidebarToggle.setAttribute('aria-expanded', 'false');
+        sidebarToggle.setAttribute('aria-label', 'Open file explorer');
       }
-      iteration += 1 / 2; // Kecepatan decode
-    }, 30);
+    });
+    // Close sidebar on escape key
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && sidebar.classList.contains('is-open')) {
+        sidebar.classList.remove('is-open');
+        sidebarToggle.setAttribute('aria-expanded', 'false');
+        sidebarToggle.setAttribute('aria-label', 'Open file explorer');
+        sidebarToggle.focus();
+      }
+    });
   }
 
-  // Menerapkan scramble ke semua heading <h2> (kecuali hero) saat masuk viewport
+  // ---------- Parallax Scroll Effect ----------
+  var pxItems = document.querySelectorAll('.px-item');
+
+  // Hanya jalankan paralaks jika user tidak menghidupkan fitur "reduce motion" di OS-nya
+  if (!reduceMotion && pxItems.length > 0) {
+    window.addEventListener('scroll', function () {
+      // Dapatkan nilai seberapa jauh halaman di-scroll
+      var scrolled = window.scrollY;
+
+      pxItems.forEach(function (el) {
+        // Ambil kecepatan spesifik setiap elemen dari atribut data-speed
+        var speed = parseFloat(el.getAttribute('data-speed'));
+
+        // Khusus untuk watermark yang dimiringkan, gabungkan rotasi dengan translasi (gerakan Y)
+        if (el.classList.contains('watermark')) {
+          el.style.transform = 'rotate(-15deg) translateY(' + (scrolled * speed) + 'px)';
+        } else {
+          el.style.transform = 'translateY(' + (scrolled * speed) + 'px)';
+        }
+      });
+    }, { passive: true }); // passive: true agar scroll tetap mulus tanpa lag
+  }
 })();
 </script>
 </body>
