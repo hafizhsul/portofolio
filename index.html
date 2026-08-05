@@ -401,10 +401,47 @@ a:focus-visible,button:focus-visible,.pill-link:focus-visible{
   border:1px solid var(--color-line);
   background:var(--color-paper-2);
   overflow:hidden;
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 1.5rem), calc(100% - 1.5rem) 100%, 0 100%);
+  transition: border-color var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out);
+}
+.portrait-frame::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  border:2px solid transparent;
+  border-top-color:var(--term-green);
+  border-left-color:var(--term-green);
+  border-radius:inherit;
+  clip-path:inherit;
+  opacity:0;
+  transition:opacity var(--dur-base) var(--ease-out);
+}
+.portrait-frame:hover{
+  border-color:var(--term-green);
+  box-shadow:0 0 24px -8px color-mix(in oklch, var(--term-green) 40%, transparent);
+}
+.portrait-frame:hover::before{
+  opacity:1;
+}
+/* Scanline overlay */
+.portrait-frame::after{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:repeating-linear-gradient(0deg, transparent, transparent 2px, color-mix(in oklch, var(--color-ink) 3%, transparent) 2px, color-mix(in oklch, var(--color-ink) 3%, transparent) 4px);
+  pointer-events:none;
+  opacity:0.08;
+  z-index:1;
 }
 .portrait-img{
   width:100%;height:100%;object-fit:cover;
   position:absolute;inset:0;
+  animation:portrait-reveal 0.8s var(--ease-out) forwards;
+  opacity:0;
+}
+@keyframes portrait-reveal{
+  from{opacity:0; transform:scale(1.04);}
+  to{opacity:1; transform:scale(1);}
 }
 .portrait-fallback{
   display:none;
@@ -423,6 +460,68 @@ a:focus-visible,button:focus-visible,.pill-link:focus-visible{
 .portrait-fallback .hint{
   font-family:var(--font-mono);font-size:var(--text-xs);
   color:var(--color-ink-soft);text-align:center;padding:0 1.5rem;
+}
+/* Terminal header overlay */
+.portrait-header{
+  position:absolute;
+  top:0;left:0;right:0;
+  z-index:2;
+  background:linear-gradient(to bottom, color-mix(in oklch, var(--color-ink) 95%, transparent), transparent 70%);
+  padding:0.6rem 0.9rem;
+  font-family:var(--font-mono);
+  font-size:var(--text-xs);
+  color:var(--term-text-soft);
+  border-bottom:1px solid var(--color-line);
+  display:flex;
+  align-items:center;
+  gap:0.5rem;
+  opacity:0;
+  transform:translateY(-100%);
+  transition:opacity var(--dur-base) var(--ease-out), transform var(--dur-base) var(--ease-out);
+}
+.portrait-frame:hover .portrait-header{
+  opacity:1;
+  transform:translateY(0);
+}
+.portrait-header .prompt-user{color:var(--term-green);}
+.portrait-header .prompt-colon{color:var(--term-text-soft);}
+.portrait-header .prompt-dir{color:var(--term-accent);}
+.portrait-header .prompt-char{color:var(--term-green);}
+.portrait-header .prompt-cmd{color:var(--term-text); margin-left:0.5rem;}
+/* Status badge */
+.portrait-badge{
+  position:absolute;
+  top:0.75rem;right:0.75rem;
+  z-index:2;
+  font-family:var(--font-mono);
+  font-size:0.6rem;
+  font-weight:600;
+  letter-spacing:0.04em;
+  text-transform:uppercase;
+  color:var(--term-green);
+  background:color-mix(in oklch, var(--term-green) 12%, transparent);
+  border:1px solid color-mix(in oklch, var(--term-green) 30%, transparent);
+  padding:0.2rem 0.5rem;
+  border-radius:4px;
+  opacity:0;
+  transform:translateY(-8px) scale(0.9);
+  transition:opacity var(--dur-base) var(--ease-out), transform var(--dur-base) var(--ease-out);
+}
+.portrait-frame:hover .portrait-badge{
+  opacity:1;
+  transform:translateY(0) scale(1);
+}
+/* Glitch effect on hover */
+.portrait-frame:hover .portrait-img{
+  animation:portrait-glitch 0.4s ease-in-out;
+}
+@keyframes portrait-glitch{
+  0%{clip-path:inset(12% 0 78% 0); transform:translate(-1px,1px);}
+  20%{clip-path:inset(45% 0 32% 0); transform:translate(1px,-1px);}
+  40%{clip-path:inset(67% 0 18% 0); transform:translate(-1px,1px);}
+  60%{clip-path:inset(23% 0 55% 0); transform:translate(1px,-1px);}
+  80%{clip-path:inset(89% 0 5% 0); transform:translate(-1px,1px);}
+  100%{clip-path:inset(0 0 0 0); transform:translate(0,0);}
 }
 .portrait-caption{
   position:absolute;left:0;right:0;bottom:0;
@@ -1381,6 +1480,14 @@ footer{padding-block:var(--space-xl) var(--space-lg);border-top:1px solid var(--
       </div>
 
       <div class="portrait-frame">
+        <div class="portrait-header" aria-hidden="true">
+          <span class="prompt-user">guest@hafizh</span>
+          <span class="prompt-colon">:</span>
+          <span class="prompt-dir">~</span>
+          <span class="prompt-char">$</span>
+          <span class="prompt-cmd">cat portrait.jpg</span>
+        </div>
+        <div class="portrait-badge" aria-hidden="true">ACTIVE</div>
         <img class="portrait-img" src="portrait.jpg" alt="Foto Hafizh Sulthan Bachtiyar"
              onerror="this.style.display='none';document.getElementById('portrait-fallback').style.display='flex';">
         <div class="portrait-fallback" id="portrait-fallback">
