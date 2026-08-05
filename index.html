@@ -1128,10 +1128,49 @@ footer{padding-block:var(--space-xl) var(--space-lg);border-top:1px solid var(--
     height: 100vh;
     width: 240px;
     max-width: 85vw;
-    z-index: 100;
+    z-index: 200;
     border-right: 1px solid var(--color-line);
     box-shadow: 4px 0 24px -8px color-mix(in oklch, var(--color-ink) 20%, transparent);
     overflow-y: auto;
+    transform: translateX(-100%);
+    transition: transform var(--dur-base) var(--ease-out);
+  }
+  .editor-sidebar.open {
+    transform: translateX(0);
+  }
+  .editor-sidebar-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 190;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(4px);
+  }
+  .editor-sidebar-overlay.active {
+    display: block;
+  }
+  .editor-toggle-sidebar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0.5rem 0.75rem;
+    background: var(--color-paper);
+    border-bottom: 1px solid var(--color-line);
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--color-ink-soft);
+    cursor: pointer;
+    border: none;
+    width: 100%;
+    text-align: left;
+    transition: background var(--dur-base);
+  }
+  .editor-toggle-sidebar:hover {
+    background: color-mix(in oklch, var(--color-accent) 8%, transparent);
+    color: var(--color-accent);
+  }
+  @media (min-width: 641px) {
+    .editor-toggle-sidebar { display: none; }
   }
 }
 
@@ -1169,6 +1208,14 @@ footer{padding-block:var(--space-xl) var(--space-lg);border-top:1px solid var(--
   flex-grow: 1;
   display: flex;
   flex-direction: column;
+}
+@media (max-width: 640px) {
+  .editor-main {
+    padding-left: 0;
+    transition: padding var(--dur-base) var(--ease-out);
+  }
+  .editor-sidebar.open ~ .editor-main,
+  .editor-main { padding-left: 0; }
 }
 
 .editor-tabs {
@@ -1355,7 +1402,7 @@ footer{padding-block:var(--space-xl) var(--space-lg);border-top:1px solid var(--
             <div class="editor-window reveal" style="--d:100ms">
 
               <!-- Sidebar Explorer -->
-              <div class="editor-sidebar">
+              <div class="editor-sidebar" id="editor-sidebar">
                 <div class="editor-sidebar-title">EXPLORER</div>
                 <ul class="file-tree">
                   <li class="folder">portfolio</li>
@@ -1369,6 +1416,10 @@ footer{padding-block:var(--space-xl) var(--space-lg);border-top:1px solid var(--
 
               <!-- Main Editor Area -->
               <div class="editor-main">
+          <div class="editor-toggle-sidebar" id="editor-toggle-sidebar">
+            <span>☰</span> EXPLORER
+          </div>
+          <div class="editor-sidebar-overlay" id="editor-sidebar-overlay"></div>
           <div class="editor-tabs">
             <div class="tab active">
               <span class="tab-icon">📄</span> readme.md
@@ -1967,6 +2018,21 @@ footer{padding-block:var(--space-xl) var(--space-lg);border-top:1px solid var(--
         }
       });
     }, { passive: true }); // passive: true agar scroll tetap mulus tanpa lag
+  }
+
+  // ---------- Editor sidebar toggle (mobile off-canvas) ----------
+  var sidebar = document.getElementById('editor-sidebar');
+  var sidebarOverlay = document.getElementById('editor-sidebar-overlay');
+  var sidebarToggle = document.getElementById('editor-toggle-sidebar');
+  if (sidebar && sidebarOverlay && sidebarToggle) {
+    sidebarToggle.addEventListener('click', function() {
+      sidebar.classList.add('open');
+      sidebarOverlay.classList.add('active');
+    });
+    sidebarOverlay.addEventListener('click', function() {
+      sidebar.classList.remove('open');
+      sidebarOverlay.classList.remove('active');
+    });
   }
 })();
 </script>
