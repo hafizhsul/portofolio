@@ -401,27 +401,35 @@ a:focus-visible,button:focus-visible,.pill-link:focus-visible{
   border:1px solid var(--color-line);
   background:var(--color-paper-2);
   overflow:hidden;
-  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 1.5rem), calc(100% - 1.5rem) 100%, 0 100%);
-  transition: border-color var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out);
+  transition: border-color var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out), transform var(--dur-base) var(--ease-out);
 }
+
+/* Breathing accent ring - passive animation */
 .portrait-frame::before{
   content:'';
   position:absolute;
-  inset:0;
+  inset:-2px;
   border:2px solid transparent;
   border-top-color:var(--term-green);
   border-left-color:var(--term-green);
   border-radius:inherit;
-  clip-path:inherit;
-  opacity:0;
-  transition:opacity var(--dur-base) var(--ease-out);
+  opacity:0.35;
+  animation:ringRotate 10s linear infinite;
 }
+@keyframes ringRotate{
+  to{transform:rotate(360deg);}
+}
+
 .portrait-frame:hover{
   border-color:var(--term-green);
-  box-shadow:0 0 24px -8px color-mix(in oklch, var(--term-green) 40%, transparent);
+  box-shadow:
+    0 0 32px -12px color-mix(in oklch, var(--term-green) 50%, transparent),
+    0 8px 32px -8px color-mix(in oklch, var(--color-ink) 25%, transparent);
+  transform:scale(1.015);
 }
 .portrait-frame:hover::before{
-  opacity:1;
+  opacity:0.6;
+  animation-duration:4s; /* speed up on hover */
 }
 /* Scanline overlay */
 .portrait-frame::after{
@@ -511,26 +519,26 @@ a:focus-visible,button:focus-visible,.pill-link:focus-visible{
   opacity:1;
   transform:translateY(0) scale(1);
 }
-/* Glitch effect on hover */
-.portrait-frame:hover .portrait-img{
-  animation:portrait-glitch 0.4s ease-in-out;
-}
-@keyframes portrait-glitch{
-  0%{clip-path:inset(12% 0 78% 0); transform:translate(-1px,1px);}
-  20%{clip-path:inset(45% 0 32% 0); transform:translate(1px,-1px);}
-  40%{clip-path:inset(67% 0 18% 0); transform:translate(-1px,1px);}
-  60%{clip-path:inset(23% 0 55% 0); transform:translate(1px,-1px);}
-  80%{clip-path:inset(89% 0 5% 0); transform:translate(-1px,1px);}
-  100%{clip-path:inset(0 0 0 0); transform:translate(0,0);}
-}
-.portrait-caption{
-  position:absolute;left:0;right:0;bottom:0;
+
+/* Portrait label - terminal whoami output style */
+.portrait-label{
+  position:absolute;
+  bottom:0;left:0;right:0;
   padding:var(--space-sm) var(--space-md);
-  background:linear-gradient(to top, color-mix(in oklch, var(--color-ink) 55%, transparent), transparent);
-}
-.portrait-caption span{
-  display:block;font-family:var(--font-mono);font-size:var(--text-xs);
+  background:linear-gradient(to top, color-mix(in oklch, var(--color-ink) 85%, transparent), transparent 60%);
+  font-family:var(--font-mono);
+  font-size:var(--text-xs);
   color:var(--color-accent-ink);
+  display:flex;
+  flex-wrap:wrap;
+  gap:0.3rem;
+  align-items:center;
+  z-index:2;
+}
+.portrait-label .prompt-output{
+  color:var(--term-green);
+  font-weight:600;
+  margin-left:0.5rem;
 }
 
 /* ---------- Section chrome: prompt-style eyebrows ---------- */
@@ -1410,6 +1418,78 @@ footer{padding-block:var(--space-xl) var(--space-lg);border-top:1px solid var(--
   font-size: var(--text-xs); 
 }
 
+/* ---------- Hero: Clean Portrait Card ---------- */
+.portrait-frame {
+  position: relative;
+  aspect-ratio: 4/5;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--term-bg-2);
+  border: 1px solid var(--term-border);
+  box-shadow: 0 4px 16px -8px color-mix(in oklch, var(--color-ink) 18%, transparent);
+  transition: transform var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out), border-color var(--dur-base) var(--ease-out);
+}
+.portrait-frame:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 4px 16px -8px color-mix(in oklch, var(--color-ink) 18%, transparent);
+  border-color: var(--term-accent);
+}
+
+.portrait-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.8s var(--ease-out);
+}
+.portrait-frame:hover .portrait-img {
+  transform: scale(1.04);
+}
+
+.portrait-fallback {
+  display: none;
+  width: 100%; height: 100%;
+  align-items: center; justify-content: center;
+  flex-direction: column; gap: .75rem;
+  background: radial-gradient(120% 100% at 100% 0%, color-mix(in oklch, var(--term-accent) 15%, transparent), transparent 60%);
+}
+.portrait-fallback .monogram {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 3.5rem;
+  color: var(--term-accent);
+  letter-spacing: -.02em;
+}
+
+/* Minimalist Tag Styling */
+.floating-tag {
+  position: absolute;
+  bottom: 1.25rem;
+  left: 1.25rem;
+  background: color-mix(in oklch, var(--term-bg) 85%, transparent);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid var(--term-border);
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--term-text);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: 0 4px 16px -8px color-mix(in oklch, var(--color-ink) 18%, transparent);
+  transform: translateY(0);
+  transition: transform var(--dur-base) var(--ease-out), background var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out);
+}
+.portrait-frame:hover .floating-tag {
+  background: var(--term-bg);
+  transform: translateY(-2px);
+}
+.floating-tag .prompt-char {
+  color: var(--term-green);
+  font-weight: bold;
+}
+
 </style>
 </head>
 <body>
@@ -1479,23 +1559,18 @@ footer{padding-block:var(--space-xl) var(--space-lg);border-top:1px solid var(--
         </div>
       </div>
 
-      <div class="portrait-frame">
-        <div class="portrait-header" aria-hidden="true">
-          <span class="prompt-user">guest@hafizh</span>
-          <span class="prompt-colon">:</span>
-          <span class="prompt-dir">~</span>
-          <span class="prompt-char">$</span>
-          <span class="prompt-cmd">cat portrait.jpg</span>
-        </div>
-        <div class="portrait-badge" aria-hidden="true">ACTIVE</div>
+      <!-- Clean Portrait Card -->
+      <div class="portrait-frame reveal" style="--d:200ms;">
         <img class="portrait-img" src="portrait.jpg" alt="Foto Hafizh Sulthan Bachtiyar"
-             onerror="this.style.display='none';document.getElementById('portrait-fallback').style.display='flex';">
+          onerror="this.style.display='none';document.getElementById('portrait-fallback').style.display='flex';">
         <div class="portrait-fallback" id="portrait-fallback">
           <span class="monogram">HSB</span>
-          <span class="hint" data-i18n="portrait.hint">Taruh file foto sebagai "portrait.jpg" di folder yang sama untuk menampilkannya di sini</span>
+          <span class="hint" data-i18n="portrait.hint">Taruh file foto "portrait.jpg" di sini</span>
         </div>
-        <div class="portrait-caption">
-          <span>Hafizh Sulthan Bachtiyar</span>
+      
+        <!-- Minimalist Terminal Tag -->
+        <div class="floating-tag">
+          <span class="prompt-char">>_</span> <span class="tag-text">Hafizh Sulthan Bachtiyar</span>
         </div>
       </div>
     </div>
