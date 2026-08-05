@@ -807,16 +807,16 @@ footer{padding-block:var(--space-xl) var(--space-lg);border-top:1px solid var(--
 }
 
 /* Syntax Highlighting */
-.json-bracket { color: #94e2d5; }
-.json-colon { color: #89dceb; }
-.json-key { color: #89b4fa; font-weight: 500; }
+.json-bracket { color: var(--term-bracket); }
+.json-colon { color: var(--term-colon); }
+.json-key { color: var(--term-key); font-weight: 500; }
 .json-string { 
-  color: #a6e3a1; 
+  color: var(--term-string); 
   transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out);
 }
 .json-string:hover { 
-  color: #b9f27c; 
-  text-shadow: 0 0 10px rgba(166, 227, 161, 0.4); 
+  color: color-mix(in oklch, var(--term-string) 130%, white); 
+  text-shadow: 0 0 10px color-mix(in oklch, var(--term-string) 40%, transparent); 
   cursor: crosshair;
 }
 
@@ -867,11 +867,11 @@ footer{padding-block:var(--space-xl) var(--space-lg);border-top:1px solid var(--
 .term-card .scanlines {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0) 50%, rgba(0,0,0,0.15) 50%, rgba(0,0,0,0.15));
+  background: linear-gradient(to bottom, transparent, transparent 50%, color-mix(in oklch, var(--color-ink) 8%, transparent) 50%, color-mix(in oklch, var(--color-ink) 8%, transparent));
   background-size: 100% 4px;
   pointer-events: none;
-  mix-blend-mode: overlay;
-  opacity: 0.8;
+  mix-blend-mode: multiply;
+  opacity: 0.4;
 }
 
 .term-card-body {
@@ -1017,7 +1017,7 @@ footer{padding-block:var(--space-xl) var(--space-lg);border-top:1px solid var(--
 /* Warna titik untuk pekerjaan terbaru (paling atas) */
 .job-entry:nth-child(1)::before { 
   background: var(--term-green); 
-  box-shadow: 0 0 8px rgba(166, 227, 161, 0.4); 
+  box-shadow: 0 0 8px color-mix(in oklch, var(--term-green) 40%, transparent); 
 }
 
 .job-meta {
@@ -1035,12 +1035,12 @@ footer{padding-block:var(--space-xl) var(--space-lg);border-top:1px solid var(--
 }
 .job-title {
   font-size: var(--text-lg);
-  color: #cdd6f4;
+  color: var(--term-text);
   margin: 0 0 0.2rem 0;
 }
 .job-company {
   font-size: var(--text-sm);
-  color: #89b4fa;
+  color: var(--term-accent);
   font-family: var(--font-mono);
 }
 
@@ -1054,7 +1054,7 @@ footer{padding-block:var(--space-xl) var(--space-lg);border-top:1px solid var(--
 }
 .job-tasks li {
   font-size: var(--text-sm);
-  color: #bac2de;
+  color: var(--term-text-soft);
   line-height: 1.6;
   position: relative;
   padding-left: 1.25rem;
@@ -1066,12 +1066,12 @@ footer{padding-block:var(--space-xl) var(--space-lg);border-top:1px solid var(--
   left: 0;
   top: 0.1rem;
   font-family: var(--font-mono);
-  color: #313244;
+  color: var(--term-border);
   font-weight: 600;
   transition: color var(--dur-base) var(--ease-out);
 }
 .job-entry:hover .job-tasks li::before {
-  color: #f38ba8; /* Berubah warna muda saat di-hover */
+  color: var(--term-btn-close);
 }
 
 /* ---------- About: IDE / Code Editor Style ---------- */
