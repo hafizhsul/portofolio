@@ -807,16 +807,16 @@ footer{padding-block:var(--space-xl) var(--space-lg);border-top:1px solid var(--
 }
 
 /* Syntax Highlighting */
-.json-bracket { color: var(--term-bracket); }
-.json-colon { color: var(--term-colon); }
-.json-key { color: var(--term-key); font-weight: 500; }
+.json-bracket { color: #94e2d5; }
+.json-colon { color: #89dceb; }
+.json-key { color: #89b4fa; font-weight: 500; }
 .json-string { 
-  color: var(--term-string); 
+  color: #a6e3a1; 
   transition: color var(--dur-fast) var(--ease-out), text-shadow var(--dur-fast) var(--ease-out);
 }
 .json-string:hover { 
-  color: var(--term-green); 
-  text-shadow: 0 0 10px color-mix(in oklch, var(--term-green) 40%, transparent); 
+  color: #b9f27c; 
+  text-shadow: 0 0 10px rgba(166, 227, 161, 0.4); 
   cursor: crosshair;
 }
 
@@ -1035,12 +1035,12 @@ footer{padding-block:var(--space-xl) var(--space-lg);border-top:1px solid var(--
 }
 .job-title {
   font-size: var(--text-lg);
-  color: var(--term-text);
+  color: #cdd6f4;
   margin: 0 0 0.2rem 0;
 }
 .job-company {
   font-size: var(--text-sm);
-  color: var(--term-accent);
+  color: #89b4fa;
   font-family: var(--font-mono);
 }
 
@@ -1054,7 +1054,7 @@ footer{padding-block:var(--space-xl) var(--space-lg);border-top:1px solid var(--
 }
 .job-tasks li {
   font-size: var(--text-sm);
-  color: var(--term-text-soft);
+  color: #bac2de;
   line-height: 1.6;
   position: relative;
   padding-left: 1.25rem;
@@ -1066,12 +1066,161 @@ footer{padding-block:var(--space-xl) var(--space-lg);border-top:1px solid var(--
   left: 0;
   top: 0.1rem;
   font-family: var(--font-mono);
-  color: var(--term-border);
+  color: #313244;
   font-weight: 600;
   transition: color var(--dur-base) var(--ease-out);
 }
 .job-entry:hover .job-tasks li::before {
-  color: color-mix(in oklch, var(--term-accent) 80%, red);
+  color: #f38ba8; /* Berubah warna muda saat di-hover */
+}
+
+/* ---------- About: IDE / Code Editor Style ---------- */
+.editor-window {
+  display: flex;
+  background: var(--color-paper-2);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  margin-top: 0.5rem;
+  box-shadow: 0 4px 16px -8px color-mix(in oklch, var(--color-ink) 18%, transparent);
+  font-family: var(--font-body);
+}
+
+/* Sidebar Explorer */
+.editor-sidebar {
+  width: 220px;
+  background: var(--color-paper);
+  border-right: 1px solid var(--color-line);
+  flex-shrink: 0;
+}
+@media (max-width: 640px) {
+  .editor-sidebar { display: none; } /* Sembunyikan sidebar di mobile */
+}
+
+.editor-sidebar-title {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--color-ink-soft);
+  padding: 1rem 1.25rem 0.5rem;
+  letter-spacing: 0.05em;
+}
+
+.file-tree {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--color-ink);
+}
+.file-tree li { padding: 0.35rem 1.25rem; cursor: default; }
+.file-tree .folder { font-weight: bold; }
+.file-tree .folder::before { content: '▾ 📁 '; color: var(--color-ink-soft); }
+.folder-content { list-style: none; padding: 0 0 0 1.25rem; margin: 0; }
+.folder-content .file { color: var(--color-ink-soft); }
+.folder-content .file::before { content: '📄 '; opacity: 0.6; margin-right: 4px; }
+/* Indikator file yang sedang aktif dibuka */
+.folder-content .file.active { 
+  background: color-mix(in oklch, var(--color-accent) 8%, transparent); 
+  color: var(--color-accent); 
+}
+.folder-content .file.active::before { opacity: 1; }
+
+/* Main Editor Area */
+.editor-main {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.editor-tabs {
+  display: flex;
+  background: var(--color-paper);
+  border-bottom: 1px solid var(--color-line);
+}
+.editor-tabs .tab {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--color-ink-soft);
+  padding: 0.6rem 1.5rem;
+  border-right: 1px solid var(--color-line);
+  background: var(--color-paper);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.editor-tabs .tab.active {
+  color: var(--color-ink);
+  background: var(--color-paper-2);
+  border-top: 2px solid var(--color-accent); /* Aksen warna biru khas IDE tab */
+}
+.tab-icon { opacity: 0.8; font-size: 0.9em; }
+
+/* Markdown Content Styling */
+.editor-content {
+  padding: 2.5rem;
+  color: var(--color-ink);
+}
+@media (max-width: 640px) {
+  .editor-content { padding: 1.5rem; }
+}
+
+.md-hash {
+  color: var(--color-line);
+  font-family: var(--font-mono);
+  margin-right: 4px;
+  user-select: none;
+}
+.editor-content h1 {
+  font-size: var(--text-xl);
+  color: var(--color-accent);
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--color-line);
+}
+.editor-content h2 {
+  font-size: var(--text-lg);
+  color: color-mix(in oklch, var(--color-accent) 80%, var(--color-ink));
+  margin: 2rem 0 1rem;
+}
+.editor-content p {
+  font-size: var(--text-sm);
+  line-height: 1.7;
+  color: var(--color-ink-soft);
+  margin-bottom: 1rem;
+}
+
+/* Quote/Block untuk menampung data Pendidikan */
+.md-quote {
+  border-left: 4px solid var(--color-accent);
+  padding-left: 1.25rem;
+  margin-top: 1rem;
+}
+.md-quote b { 
+  color: var(--color-ink); 
+  font-size: var(--text-base); 
+  display: block; 
+  margin-bottom: 0.25rem; 
+}
+.md-sub {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-ink-soft);
+  display: block;
+}
+.md-tags {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+.md-tag { 
+  background: color-mix(in oklch, var(--color-accent) 10%, transparent); 
+  border: 1px solid color-mix(in oklch, var(--color-accent) 20%, transparent);
+  color: var(--color-accent); 
+  padding: 0.25rem 0.6rem; 
+  border-radius: 4px; 
+  font-family: var(--font-mono); 
+  font-size: var(--text-xs); 
 }
 
 </style>
@@ -1145,20 +1294,63 @@ footer{padding-block:var(--space-xl) var(--space-lg);border-top:1px solid var(--
   </section>
 
   <section id="about">
-    <div class="wrap about-body">
-      <div class="about-text reveal">
+    <div class="wrap">
+      <div class="section-head reveal">
         <span class="section-eyebrow mono-tag">~/about</span>
-        <h2 style="margin-top:.4rem;" data-i18n="about.h2">Dua sisi yang saling melengkapi</h2><br>
-        <p data-i18n="about.p1">Saya memulai karier dengan tangan langsung di lapangan, menangani hardware, jaringan, dan dukungan pengguna di berbagai proyek, mulai dari IoT hingga konstruksi. Dari situ saya terbiasa mendokumentasikan pekerjaan secara terstruktur dan berkoordinasi lintas tim untuk menyelesaikan masalah teknis.</p>
-        <p data-i18n="about.p2">Di sisi lain, saya juga membangun software: dari sistem administrasi pemerintah daerah dengan Laravel, dashboard internal dengan Symfony, sampai aplikasi mobile Android. Kombinasi ini membuat saya nyaman berada di posisi yang butuh troubleshooting cepat sekaligus pemahaman teknis yang lebih dalam.</p>
+        <!-- Judul dipindah ke dalam file Markdown -->
       </div>
-      <div class="edu-card reveal" style="--d:120ms">
-        <span class="mono-tag" data-i18n="edu.tag">Pendidikan</span>
-        <h3 style="margin-top:.5rem;" data-i18n="edu.h3">D3 Teknologi Informasi</h3>
-        <p class="mono-tag">Politeknik Negeri Madiun · 2021–2024</p>
-        <div class="edu-stats">
-          <div class="edu-stat"><b>3.67</b><span data-i18n="edu.stat1">IPK / 4.00</span></div>
-          <div class="edu-stat"><b>#1</b><span data-i18n="edu.stat2"></span></div>
+  
+      <!-- IDE / Code Editor Mockup -->
+      <div class="editor-window reveal" style="--d:100ms">
+  
+        <!-- Sidebar Explorer -->
+        <div class="editor-sidebar">
+          <div class="editor-sidebar-title">EXPLORER</div>
+          <ul class="file-tree">
+            <li class="folder">portfolio</li>
+            <ul class="folder-content">
+              <li class="file active">readme.md</li>
+              <li class="file">skills.json</li>
+              <li class="file">experience.log</li>
+            </ul>
+          </ul>
+        </div>
+  
+        <!-- Main Editor Area -->
+        <div class="editor-main">
+          <div class="editor-tabs">
+            <div class="tab active">
+              <span class="tab-icon">📄</span> readme.md
+            </div>
+          </div>
+          <div class="editor-content">
+            <h1 style="margin-top: 0;"><span class="md-hash">#</span> <span data-i18n="about.h2">Dua sisi yang saling
+                melengkapi</span></h1>
+  
+            <p data-i18n="about.p1">Saya memulai karier dengan tangan langsung di lapangan, menangani hardware, jaringan,
+              dan dukungan pengguna di berbagai proyek, mulai dari IoT hingga konstruksi. Dari situ saya terbiasa
+              mendokumentasikan pekerjaan secara terstruktur dan berkoordinasi lintas tim untuk menyelesaikan masalah
+              teknis.</p>
+  
+            <p data-i18n="about.p2">Di sisi lain, saya juga membangun software: dari sistem administrasi pemerintah daerah
+              dengan Laravel, dashboard internal dengan Symfony, sampai aplikasi mobile Android. Kombinasi ini membuat
+              saya nyaman berada di posisi yang butuh troubleshooting cepat sekaligus pemahaman teknis yang lebih dalam.
+            </p>
+  
+            <h2><span class="md-hash">##</span> <span data-i18n="edu.tag">Pendidikan</span></h2>
+  
+            <!-- Mengubah Card Pendidikan menjadi gaya Blockquote Markdown -->
+            <div class="md-quote">
+              <b data-i18n="edu.h3">D3 Teknologi Informasi</b>
+              <span class="md-sub">Politeknik Negeri Madiun · 2021–2024</span>
+  
+              <div class="md-tags">
+                <span class="md-tag">IPK: 3.67 / 4.00</span>
+                <span class="md-tag">MSIB Batch 6</span>
+              </div>
+            </div>
+  
+          </div>
         </div>
       </div>
     </div>
