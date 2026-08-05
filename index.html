@@ -1149,30 +1149,35 @@ footer{padding-block:var(--space-xl) var(--space-lg);border-top:1px solid var(--
   .editor-sidebar-overlay.active {
     display: block;
   }
+}
+
+/* Editor sidebar toggle — hidden on desktop, visible on mobile */
+.editor-toggle-sidebar {
+  display: none;
+  align-items: center;
+  gap: 4px;
+  padding: 0.4rem 0.75rem;
+  background: transparent;
+  border-bottom: 1px solid var(--color-line);
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--color-ink-soft);
+  cursor: pointer;
+  border: none;
+  width: 100%;
+  text-align: left;
+  transition: background var(--dur-base);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+@media (max-width: 640px) {
   .editor-toggle-sidebar {
     display: flex;
-    align-items: center;
-    gap: 6px;
-    padding: 0.5rem 1.25rem;
-    background: var(--color-paper);
-    border-bottom: 1px solid var(--color-line);
-    font-family: var(--font-mono);
-    font-size: 0.7rem;
-    color: var(--color-ink-soft);
-    cursor: pointer;
-    border: none;
-    width: 100%;
-    text-align: left;
-    transition: background var(--dur-base);
-    letter-spacing: 0.05em;
   }
-  .editor-toggle-sidebar:hover {
-    background: color-mix(in oklch, var(--color-accent) 8%, transparent);
-    color: var(--color-accent);
-  }
-  @media (min-width: 641px) {
-    .editor-toggle-sidebar { display: none; }
-  }
+}
+.editor-toggle-sidebar:hover {
+  background: color-mix(in oklch, var(--color-accent) 8%, transparent);
+  color: var(--color-accent);
 }
 
 .editor-sidebar-title {
@@ -1212,11 +1217,8 @@ footer{padding-block:var(--space-xl) var(--space-lg);border-top:1px solid var(--
 }
 @media (max-width: 640px) {
   .editor-main {
-    padding-left: 0;
-    transition: padding var(--dur-base) var(--ease-out);
+    min-width: 0;
   }
-  .editor-sidebar.open ~ .editor-main,
-  .editor-main { padding-left: 0; }
 }
 
 .editor-tabs {
