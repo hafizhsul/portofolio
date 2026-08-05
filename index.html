@@ -21,7 +21,7 @@
   --color-paper: oklch(97.5% 0.004 250);
   --color-paper-2: oklch(99.4% 0.002 250);
   --color-ink: oklch(21% 0.02 255);
-  --color-ink-soft: oklch(42% 0.02 255);
+  --color-ink-soft: oklch(38% 0.02 255);
   --color-line: oklch(87% 0.006 250);
   --color-accent: oklch(52% 0.17 258);
   --color-accent-ink: oklch(98% 0.005 250);
@@ -89,23 +89,23 @@ html[data-theme="dark"]{
   --color-accent-ink: oklch(15% 0.01 255);
   --color-accent-soft: oklch(30% 0.05 258);
   --color-good: oklch(72% 0.15 150);
-  --term-bg: #11111b;
-  --term-bg-2: #1e1e2e;
-  --term-border: #313244;
-  --term-header-bg: #181825;
-  --term-text: #cdd6f4;
-  --term-text-soft: #a6adc8;
-  --term-accent: #89b4fa;
-  --term-green: #a6e3a1;
-  --term-yellow: #f9e2af;
-  --term-bracket: #94e2d5;
-  --term-colon: #89dceb;
-  --term-key: #89b4fa;
-  --term-string: #a6e3a1;
-  --term-btn-close: #f38ba8;
-  --term-btn-min: #f9e2af;
-  --term-btn-max: #a6e3a1;
-  --term-highlight: #89b4fa;
+  --term-bg: var(--color-paper);
+  --term-bg-2: var(--color-paper-2);
+  --term-border: var(--color-line);
+  --term-header-bg: oklch(19% 0.013 255);
+  --term-text: var(--color-ink);
+  --term-text-soft: var(--color-ink-soft);
+  --term-accent: var(--color-accent);
+  --term-green: var(--color-good);
+  --term-yellow: oklch(85% 0.12 85);
+  --term-bracket: oklch(75% 0.1 180);
+  --term-colon: oklch(75% 0.1 200);
+  --term-key: var(--color-accent);
+  --term-string: var(--color-good);
+  --term-btn-close: oklch(65% 0.2 20);
+  --term-btn-min: oklch(85% 0.12 85);
+  --term-btn-max: var(--color-good);
+  --term-highlight: var(--color-accent);
   color-scheme: dark;
 }
 
@@ -698,6 +698,8 @@ footer{padding-block:var(--space-xl) var(--space-lg);border-top:1px solid var(--
   .reveal{opacity:1 !important;transform:none !important;}
   .portrait-frame,.status-dot{animation:none !important;}
   .hero h1 .tw-cursor{animation:none;opacity:1;}
+  .glitch-hover:hover{animation:none;}
+  .glitch-hover:hover::before,.glitch-hover:hover::after{animation:none;opacity:0;}
 }
 
 /* ---------- Glitch Hover Effect ---------- */
@@ -1850,60 +1852,43 @@ footer{padding-block:var(--space-xl) var(--space-lg);border-top:1px solid var(--
 
   setLang('en'); // default language — ID still available via toggle
 
-  // ---------- Scroll reveal: sections (generic fade-up) ----------
+  // ---------- Scroll reveal: consolidated single IntersectionObserver ----------
   var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var revealEls = document.querySelectorAll('.reveal');
+  var revealEls = document.querySelectorAll('.reveal, .tl-item, .skill-group, .section-head, .about-text');
   if(reduceMotion || !('IntersectionObserver' in window)){
     revealEls.forEach(function(el){ el.classList.add('is-visible'); });
   } else {
     var io = new IntersectionObserver(function(entries){
       entries.forEach(function(entry){
         if(entry.isIntersecting){
-          entry.target.classList.add('is-visible');
-          io.unobserve(entry.target);
+          var el = entry.target;
+          // Generic fade-up for .reveal
+          if(el.classList.contains('reveal')){
+            el.classList.add('is-visible');
+          }
+          // Terminal line-by-line for .tl-item
+          if(el.classList.contains('tl-item')){
+            el.classList.add('is-visible');
+          }
+          // Skill chips cascade for .skill-group
+          if(el.classList.contains('skill-group')){
+            el.classList.add('is-visible');
+          }
+          // Section head prompt animation for .section-head
+          if(el.classList.contains('section-head')){
+            el.classList.add('is-visible');
+          }
+          // Text scramble for h2 in .section-head or .about-text
+          if(el.classList.contains('section-head') || el.classList.contains('about-text')){
+            var h2 = el.querySelector('h2');
+            if(h2) scrambleText(h2);
+          }
+          io.unobserve(el);
         }
       });
     }, { threshold: 0.15, rootMargin: '0px 0px -8% 0px' });
     revealEls.forEach(function(el){ io.observe(el); });
-
-    // Terminal line-by-line: timeline items stream like command output
-    var tlItems = document.querySelectorAll('.tl-item');
-    var tlIO = new IntersectionObserver(function(entries){
-      entries.forEach(function(entry){
-        if(entry.isIntersecting){
-          entry.target.classList.add('is-visible');
-          tlIO.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.15, rootMargin: '0px 0px -8% 0px' });
-    tlItems.forEach(function(el){ tlIO.observe(el); });
-
-    // Skill chips cascade like tab-completion
-    var skillGroups = document.querySelectorAll('.skill-group');
-    var sgIO = new IntersectionObserver(function(entries){
-      entries.forEach(function(entry){
-        if(entry.isIntersecting){
-          entry.target.classList.add('is-visible');
-          sgIO.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.15, rootMargin: '0px 0px -8% 0px' });
-    skillGroups.forEach(function(el){ sgIO.observe(el); });
-
-    // Section heads: prompt eyebrow before heading
-    var sectionHeads = document.querySelectorAll('.section-head');
-    var shIO = new IntersectionObserver(function(entries){
-      entries.forEach(function(entry){
-        if(entry.isIntersecting){
-          entry.target.classList.add('is-visible');
-          shIO.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.15, rootMargin: '0px 0px -8% 0px' });
-    sectionHeads.forEach(function(el){ shIO.observe(el); });
   }
-
-  // ---------- Nav scrolled state ----------
   var navShellEl = document.querySelector('.nav-shell');
   function onScroll(){
     if(window.scrollY > 40){ navShellEl.classList.add('is-scrolled'); }
@@ -1937,21 +1922,6 @@ footer{padding-block:var(--space-xl) var(--space-lg);border-top:1px solid var(--
   }
 
   // Menerapkan scramble ke semua heading <h2> (kecuali hero) saat masuk viewport
-  if (!reduceMotion && 'IntersectionObserver' in window) {
-    var scrambleIO = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (entry.isIntersecting) {
-          var h2 = entry.target.querySelector('h2');
-          if (h2) scrambleText(h2);
-          scrambleIO.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.15, rootMargin: '0px 0px -8% 0px' });
-
-    document.querySelectorAll('.section-head, .about-text').forEach(function (el) {
-      scrambleIO.observe(el);
-    });
-  }
 })();
 </script>
 </body>
