@@ -1124,62 +1124,15 @@ footer{padding-block:var(--space-xl) var(--space-lg);border-top:1px solid var(--
   .editor-sidebar {
     position: fixed;
     top: 0;
-    left: -260px;
+    left: 0;
     height: 100vh;
     width: 240px;
     max-width: 85vw;
     z-index: 100;
     border-right: 1px solid var(--color-line);
     box-shadow: 4px 0 24px -8px color-mix(in oklch, var(--color-ink) 20%, transparent);
-    transform: translateX(0);
-    transition: left var(--dur-base) var(--ease-out);
     overflow-y: auto;
   }
-  .editor-sidebar.is-open {
-    left: 0;
-  }
-  .editor-sidebar::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background: color-mix(in oklch, var(--color-ink) 40%, transparent);
-    opacity: 0;
-    visibility: hidden;
-    z-index: -1;
-    transition: opacity var(--dur-base) var(--ease-out), visibility var(--dur-base) var(--ease-out);
-  }
-  .editor-sidebar.is-open::before {
-    opacity: 1;
-    visibility: visible;
-  }
-}
-
-/* Mobile sidebar toggle button */
-.editor-sidebar-toggle {
-  display: none;
-  position: fixed;
-  bottom: var(--space-lg);
-  right: var(--space-lg);
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  background: var(--color-ink);
-  color: var(--color-accent-ink);
-  border: none;
-  cursor: pointer;
-  box-shadow: 0 4px 16px -8px color-mix(in oklch, var(--color-ink) 30%, transparent);
-  z-index: 99;
-  align-items: center;
-  justify-content: center;
-}
-@media (max-width: 640px) {
-  .editor-sidebar-toggle {
-    display: flex;
-  }
-}
-.editor-sidebar-toggle:focus-visible {
-  outline: 2px solid var(--color-accent);
-  outline-offset: 3px;
 }
 
 .editor-sidebar-title {
@@ -1413,11 +1366,6 @@ footer{padding-block:var(--space-xl) var(--space-lg);border-top:1px solid var(--
                   </ul>
                 </ul>
               </div>
-
-              <!-- Mobile sidebar toggle -->
-              <button class="editor-sidebar-toggle" aria-label="Toggle file explorer" aria-expanded="false">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
-              </button>
 
               <!-- Main Editor Area -->
               <div class="editor-main">
@@ -1997,34 +1945,6 @@ footer{padding-block:var(--space-xl) var(--space-lg);border-top:1px solid var(--
   }
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
-
-  // ---------- Mobile Editor Sidebar Toggle ----------
-  var sidebar = document.querySelector('.editor-sidebar');
-  var sidebarToggle = document.querySelector('.editor-sidebar-toggle');
-  if (sidebar && sidebarToggle) {
-    sidebarToggle.addEventListener('click', function() {
-      var isOpen = sidebar.classList.toggle('is-open');
-      sidebarToggle.setAttribute('aria-expanded', isOpen);
-      sidebarToggle.setAttribute('aria-label', isOpen ? 'Close file explorer' : 'Open file explorer');
-    });
-    // Close sidebar when clicking overlay
-    sidebar.addEventListener('click', function(e) {
-      if (e.target === sidebar) {
-        sidebar.classList.remove('is-open');
-        sidebarToggle.setAttribute('aria-expanded', 'false');
-        sidebarToggle.setAttribute('aria-label', 'Open file explorer');
-      }
-    });
-    // Close sidebar on escape key
-    document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape' && sidebar.classList.contains('is-open')) {
-        sidebar.classList.remove('is-open');
-        sidebarToggle.setAttribute('aria-expanded', 'false');
-        sidebarToggle.setAttribute('aria-label', 'Open file explorer');
-        sidebarToggle.focus();
-      }
-    });
-  }
 
   // ---------- Parallax Scroll Effect ----------
   var pxItems = document.querySelectorAll('.px-item');
